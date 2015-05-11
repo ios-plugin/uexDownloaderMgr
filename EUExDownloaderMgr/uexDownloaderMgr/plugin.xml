@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<uexplugins>
+    <plugin name="uexDownloaderMgr">
+        <method name="createDownloader"></method>
+		<method name="download"></method>
+        <method name="closeDownloader"></method>
+        <method name="getInfo"></method>
+        <method name="clearTask"></method>
+        <method name="setHeaders"></method>
+        <method name="cancelDownload"></method>
+	</plugin>
+</uexplugins>

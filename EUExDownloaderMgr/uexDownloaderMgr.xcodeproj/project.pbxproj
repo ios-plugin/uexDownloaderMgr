@@ -1,0 +1,402 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3CFA580D18C08E5700B636E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFA580C18C08E5700B636E9 /* Foundation.framework */; };
+		3CFA585518C08E8D00B636E9 /* libAppCanEngine_IOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFA585418C08E8D00B636E9 /* libAppCanEngine_IOS.a */; };
+		3CFA585718C08ED200B636E9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFA585618C08ED200B636E9 /* UIKit.framework */; };
+		3CFA585918C08EE900B636E9 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFA585818C08EE900B636E9 /* CoreTelephony.framework */; };
+		3CFA585B18C08EF000B636E9 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFA585A18C08EF000B636E9 /* MapKit.framework */; };
+		3CFA585D18C08EF800B636E9 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFA585C18C08EF800B636E9 /* AudioToolbox.framework */; };
+		3CFA585F18C08F0000B636E9 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFA585E18C08F0000B636E9 /* MobileCoreServices.framework */; };
+		3CFA586118C08F0900B636E9 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFA586018C08F0900B636E9 /* SystemConfiguration.framework */; };
+		3CFA586318C08F8C00B636E9 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFA586218C08F8C00B636E9 /* libsqlite3.dylib */; };
+		3CFA586718C08FA900B636E9 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFA586618C08FA900B636E9 /* libz.dylib */; };
+		3CFA58A318C091C900B636E9 /* EUExDownloaderMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFA588918C091C900B636E9 /* EUExDownloaderMgr.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		3CFA58A418C091C900B636E9 /* EUExDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFA589A18C091C900B636E9 /* EUExDownload.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3CFA580718C08E5700B636E9 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/$(PRODUCT_NAME)";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		3CFA580918C08E5700B636E9 /* uexDownloaderMgr.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = uexDownloaderMgr.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		3CFA580C18C08E5700B636E9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		3CFA585418C08E8D00B636E9 /* libAppCanEngine_IOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAppCanEngine_IOS.a; path = ../libAppCanEngine_IOS.a; sourceTree = "<group>"; };
+		3CFA585618C08ED200B636E9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		3CFA585818C08EE900B636E9 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		3CFA585A18C08EF000B636E9 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		3CFA585C18C08EF800B636E9 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		3CFA585E18C08F0000B636E9 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		3CFA586018C08F0900B636E9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		3CFA586218C08F8C00B636E9 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		3CFA586618C08FA900B636E9 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		3CFA588418C091C900B636E9 /* EUExBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EUExBase.h; sourceTree = "<group>"; };
+		3CFA588518C091C900B636E9 /* EUExBaseDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EUExBaseDefine.h; sourceTree = "<group>"; };
+		3CFA588618C091C900B636E9 /* EUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EUtility.h; sourceTree = "<group>"; };
+		3CFA588718C091C900B636E9 /* EUExDownloaderMgr-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "EUExDownloaderMgr-Prefix.pch"; path = "EUExDownloaderMgr/EUExDownloaderMgr-Prefix.pch"; sourceTree = SOURCE_ROOT; };
+		3CFA588818C091C900B636E9 /* EUExDownloaderMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EUExDownloaderMgr.h; path = EUExDownloaderMgr/EUExDownloaderMgr.h; sourceTree = SOURCE_ROOT; };
+		3CFA588918C091C900B636E9 /* EUExDownloaderMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EUExDownloaderMgr.m; path = EUExDownloaderMgr/EUExDownloaderMgr.m; sourceTree = SOURCE_ROOT; };
+		3CFA588C18C091C900B636E9 /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
+		3CFA588D18C091C900B636E9 /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
+		3CFA588E18C091C900B636E9 /* ASIDataCompressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIDataCompressor.h; sourceTree = "<group>"; };
+		3CFA588F18C091C900B636E9 /* ASIDataDecompressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIDataDecompressor.h; sourceTree = "<group>"; };
+		3CFA589018C091C900B636E9 /* ASIDownloadCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIDownloadCache.h; sourceTree = "<group>"; };
+		3CFA589118C091C900B636E9 /* ASIFormDataRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIFormDataRequest.h; sourceTree = "<group>"; };
+		3CFA589218C091C900B636E9 /* ASIHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequest.h; sourceTree = "<group>"; };
+		3CFA589318C091C900B636E9 /* ASIHTTPRequestConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequestConfig.h; sourceTree = "<group>"; };
+		3CFA589418C091C900B636E9 /* ASIHTTPRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequestDelegate.h; sourceTree = "<group>"; };
+		3CFA589518C091C900B636E9 /* ASIInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIInputStream.h; sourceTree = "<group>"; };
+		3CFA589618C091C900B636E9 /* ASINetworkQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASINetworkQueue.h; sourceTree = "<group>"; };
+		3CFA589718C091C900B636E9 /* ASIProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIProgressDelegate.h; sourceTree = "<group>"; };
+		3CFA589818C091C900B636E9 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		3CFA589918C091C900B636E9 /* EUExDownload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EUExDownload.h; sourceTree = "<group>"; };
+		3CFA589A18C091C900B636E9 /* EUExDownload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EUExDownload.m; sourceTree = "<group>"; };
+		3CFA589C18C091C900B636E9 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
+		3CFA589D18C091C900B636E9 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
+		3CFA589E18C091C900B636E9 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
+		3CFA589F18C091C900B636E9 /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
+		3CFA58A018C091C900B636E9 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
+		3CFA58A118C091C900B636E9 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		3CFA58A218C091C900B636E9 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		3CFA580618C08E5700B636E9 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CFA586718C08FA900B636E9 /* libz.dylib in Frameworks */,
+				3CFA586318C08F8C00B636E9 /* libsqlite3.dylib in Frameworks */,
+				3CFA586118C08F0900B636E9 /* SystemConfiguration.framework in Frameworks */,
+				3CFA585F18C08F0000B636E9 /* MobileCoreServices.framework in Frameworks */,
+				3CFA585D18C08EF800B636E9 /* AudioToolbox.framework in Frameworks */,
+				3CFA585B18C08EF000B636E9 /* MapKit.framework in Frameworks */,
+				3CFA585918C08EE900B636E9 /* CoreTelephony.framework in Frameworks */,
+				3CFA585718C08ED200B636E9 /* UIKit.framework in Frameworks */,
+				3CFA585518C08E8D00B636E9 /* libAppCanEngine_IOS.a in Frameworks */,
+				3CFA580D18C08E5700B636E9 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3CFA580018C08E5700B636E9 = {
+			isa = PBXGroup;
+			children = (
+				3CFA580E18C08E5700B636E9 /* uexDownloaderMgr */,
+				3CFA580B18C08E5700B636E9 /* Frameworks */,
+				3CFA580A18C08E5700B636E9 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		3CFA580A18C08E5700B636E9 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3CFA580918C08E5700B636E9 /* uexDownloaderMgr.dylib */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		3CFA580B18C08E5700B636E9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				3CFA586618C08FA900B636E9 /* libz.dylib */,
+				3CFA586218C08F8C00B636E9 /* libsqlite3.dylib */,
+				3CFA586018C08F0900B636E9 /* SystemConfiguration.framework */,
+				3CFA585E18C08F0000B636E9 /* MobileCoreServices.framework */,
+				3CFA585C18C08EF800B636E9 /* AudioToolbox.framework */,
+				3CFA585A18C08EF000B636E9 /* MapKit.framework */,
+				3CFA585818C08EE900B636E9 /* CoreTelephony.framework */,
+				3CFA585618C08ED200B636E9 /* UIKit.framework */,
+				3CFA585418C08E8D00B636E9 /* libAppCanEngine_IOS.a */,
+				3CFA580C18C08E5700B636E9 /* Foundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3CFA580E18C08E5700B636E9 /* uexDownloaderMgr */ = {
+			isa = PBXGroup;
+			children = (
+				3CFA588318C091C900B636E9 /* engineHeader */,
+				3CFA588718C091C900B636E9 /* EUExDownloaderMgr-Prefix.pch */,
+				3CFA588818C091C900B636E9 /* EUExDownloaderMgr.h */,
+				3CFA588918C091C900B636E9 /* EUExDownloaderMgr.m */,
+				3CFA588A18C091C900B636E9 /* sourceCode */,
+			);
+			path = uexDownloaderMgr;
+			sourceTree = "<group>";
+		};
+		3CFA588318C091C900B636E9 /* engineHeader */ = {
+			isa = PBXGroup;
+			children = (
+				3CFA588418C091C900B636E9 /* EUExBase.h */,
+				3CFA588518C091C900B636E9 /* EUExBaseDefine.h */,
+				3CFA588618C091C900B636E9 /* EUtility.h */,
+			);
+			name = engineHeader;
+			path = EUExDownloaderMgr/engineHeader;
+			sourceTree = SOURCE_ROOT;
+		};
+		3CFA588A18C091C900B636E9 /* sourceCode */ = {
+			isa = PBXGroup;
+			children = (
+				3CFA588B18C091C900B636E9 /* asihttprequest */,
+				3CFA589918C091C900B636E9 /* EUExDownload.h */,
+				3CFA589A18C091C900B636E9 /* EUExDownload.m */,
+				3CFA589B18C091C900B636E9 /* JSON */,
+			);
+			name = sourceCode;
+			path = EUExDownloaderMgr/sourceCode;
+			sourceTree = SOURCE_ROOT;
+		};
+		3CFA588B18C091C900B636E9 /* asihttprequest */ = {
+			isa = PBXGroup;
+			children = (
+				3CFA588C18C091C900B636E9 /* ASIAuthenticationDialog.h */,
+				3CFA588D18C091C900B636E9 /* ASICacheDelegate.h */,
+				3CFA588E18C091C900B636E9 /* ASIDataCompressor.h */,
+				3CFA588F18C091C900B636E9 /* ASIDataDecompressor.h */,
+				3CFA589018C091C900B636E9 /* ASIDownloadCache.h */,
+				3CFA589118C091C900B636E9 /* ASIFormDataRequest.h */,
+				3CFA589218C091C900B636E9 /* ASIHTTPRequest.h */,
+				3CFA589318C091C900B636E9 /* ASIHTTPRequestConfig.h */,
+				3CFA589418C091C900B636E9 /* ASIHTTPRequestDelegate.h */,
+				3CFA589518C091C900B636E9 /* ASIInputStream.h */,
+				3CFA589618C091C900B636E9 /* ASINetworkQueue.h */,
+				3CFA589718C091C900B636E9 /* ASIProgressDelegate.h */,
+				3CFA589818C091C900B636E9 /* Reachability.h */,
+			);
+			path = asihttprequest;
+			sourceTree = "<group>";
+		};
+		3CFA589B18C091C900B636E9 /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				3CFA589C18C091C900B636E9 /* JSON.h */,
+				3CFA589D18C091C900B636E9 /* NSObject+SBJSON.h */,
+				3CFA589E18C091C900B636E9 /* NSString+SBJSON.h */,
+				3CFA589F18C091C900B636E9 /* SBJSON.h */,
+				3CFA58A018C091C900B636E9 /* SBJsonBase.h */,
+				3CFA58A118C091C900B636E9 /* SBJsonParser.h */,
+				3CFA58A218C091C900B636E9 /* SBJsonWriter.h */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		3CFA580818C08E5700B636E9 /* uexDownloaderMgr */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3CFA582C18C08E5700B636E9 /* Build configuration list for PBXNativeTarget "uexDownloaderMgr" */;
+			buildPhases = (
+				3CFA580518C08E5700B636E9 /* Sources */,
+				3CFA580618C08E5700B636E9 /* Frameworks */,
+				3CFA580718C08E5700B636E9 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = uexDownloaderMgr;
+			productName = uexDownloaderMgr;
+			productReference = 3CFA580918C08E5700B636E9 /* uexDownloaderMgr.dylib */;
+			productType = "com.apple.product-type.library.dynamic";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3CFA580118C08E5700B636E9 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0500;
+				ORGANIZATIONNAME = demo;
+			};
+			buildConfigurationList = 3CFA580418C08E5700B636E9 /* Build configuration list for PBXProject "uexDownloaderMgr" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 3CFA580018C08E5700B636E9;
+			productRefGroup = 3CFA580A18C08E5700B636E9 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				3CFA580818C08E5700B636E9 /* uexDownloaderMgr */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		3CFA580518C08E5700B636E9 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3CFA58A418C091C900B636E9 /* EUExDownload.m in Sources */,
+				3CFA58A318C091C900B636E9 /* EUExDownloaderMgr.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		3CFA582A18C08E5700B636E9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhengyi Wireless(Beijing) Technology Co., Ltd.";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				ONLY_ACTIVE_ARCH = NO;
+				SDKROOT = iphoneos;
+				VALID_ARCHS = "armv7 armv7s";
+			};
+			name = Debug;
+		};
+		3CFA582B18C08E5700B636E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Zhengyi Wireless(Beijing) Technology Co., Ltd.";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				VALID_ARCHS = "armv7 armv7s";
+			};
+			name = Release;
+		};
+		3CFA582D18C08E5700B636E9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: leilei xu (T8E4RVNP82)";
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/uexDownloaderMgr/";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DSTROOT = /tmp/uexDownloaderMgr.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EUExDownloaderMgr/EUExDownloaderMgr-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../",
+				);
+				ONLY_ACTIVE_ARCH = NO;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		3CFA582E18C08E5700B636E9 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: leilei xu (T8E4RVNP82)";
+				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/uexDownloaderMgr/";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DSTROOT = /tmp/uexDownloaderMgr.dst;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "EUExDownloaderMgr/EUExDownloaderMgr-Prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../",
+				);
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		3CFA580418C08E5700B636E9 /* Build configuration list for PBXProject "uexDownloaderMgr" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3CFA582A18C08E5700B636E9 /* Debug */,
+				3CFA582B18C08E5700B636E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3CFA582C18C08E5700B636E9 /* Build configuration list for PBXNativeTarget "uexDownloaderMgr" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3CFA582D18C08E5700B636E9 /* Debug */,
+				3CFA582E18C08E5700B636E9 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3CFA580118C08E5700B636E9 /* Project object */;
+}
