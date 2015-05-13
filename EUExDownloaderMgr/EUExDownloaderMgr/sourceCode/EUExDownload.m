@@ -66,6 +66,11 @@
     [asiRequest setTimeOutSeconds:120];
     [asiRequest setDownloadDestinationPath:DLSavePath];
     [asiRequest setTemporaryFileDownloadPath:tempPath];
+    //
+    if ([inDLUrl rangeOfString:@"https"].location != NSNotFound) {
+        [asiRequest setValidatesSecureCertificate:NO];
+    }
+    
     if (headerDict) {
         [asiRequest setRequestHeaders:headerDict];
     }
