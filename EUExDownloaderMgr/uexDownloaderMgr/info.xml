@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <uexplugins>
     <plugin
-        uexName="uexDownloaderMgr" version="3.0.2" build="2">
-        <info>2:为和文档保持统一增加uexDownloaderMgr.cancelDownload接口</info>
+        uexName="uexDownloaderMgr" version="3.0.3" build="3">
+        <info>3:支持https</info>
+        <build>2:为和文档保持统一增加uexDownloaderMgr.cancelDownload接口</build>
         <build>1:新增setHeaders接口</build>
         <build>0:下载管理功能插件</build>
     </plugin>
