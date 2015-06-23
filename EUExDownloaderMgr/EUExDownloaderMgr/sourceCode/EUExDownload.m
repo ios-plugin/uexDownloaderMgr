@@ -8,6 +8,10 @@
 #import "EUtility.h"
 #import "EUExDownload.h"
 #import "EUExDownloaderMgr.h"
+#import "BUtility.h"
+#import "EBrowserView.h"
+#import "WWidget.h"
+#import "WidgetOneDelegate.h"
 @implementation EUExDownload
 @synthesize euexObj;
 @synthesize opID,downFlag;
@@ -61,15 +65,27 @@
     }
     NSURL *url = [NSURL URLWithString:inDLUrl];
     ASIHTTPRequest *asiRequest = [ASIHTTPRequest requestWithURL:url];
+    NSRange ranges=[inDLUrl rangeOfString:@"https://"];
+    if (NSNotFound !=ranges.location) {
+        SecIdentityRef identity=NULL;
+        SecTrustRef trust=NULL;
+        SecCertificateRef certifica=NULL;
+        NSData *PKCS12Data=[NSData dataWithContentsOfFile:[BUtility clientCertficatePath]];
+        [BUtility extractIdentity:theApp.useCertificatePassWord andIdentity:&identity andTrust:&trust andCertChain:&certifica fromPKCS12Data:PKCS12Data];
+        if (theApp.useCertificateControl) {
+            [asiRequest setValidatesSecureCertificate:YES];
+            [asiRequest setClientCertificateIdentity:identity];
+        }else{
+            [asiRequest setValidatesSecureCertificate:NO];
+            [asiRequest setClientCertificateIdentity:nil];
+        }
+    }
     [asiRequest setDelegate:self];
     [asiRequest setDownloadProgressDelegate:self];
     [asiRequest setTimeOutSeconds:120];
     [asiRequest setDownloadDestinationPath:DLSavePath];
     [asiRequest setTemporaryFileDownloadPath:tempPath];
-    //
-    if ([inDLUrl rangeOfString:@"https"].location != NSNotFound) {
-        [asiRequest setValidatesSecureCertificate:NO];
-    }
+    
     
     if (headerDict) {
         [asiRequest setRequestHeaders:headerDict];
