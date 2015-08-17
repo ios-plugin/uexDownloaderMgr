@@ -18,8 +18,10 @@
 	ASINetworkQueue *dQueue;
 	long long fileTotalLength;
 	long long appendFileSize;
+    ASIHTTPRequest *asiRequest;
 }
- 
+
+@property(nonatomic,retain)ASIHTTPRequest *asiRequest;
 @property(nonatomic,retain)ASINetworkQueue *dQueue;
 @property(nonatomic,assign)EUExDownloaderMgr *euexObj;
 @property(nonatomic,copy)NSNumber *opID;
