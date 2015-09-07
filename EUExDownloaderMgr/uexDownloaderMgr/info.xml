@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <uexplugins>
     <plugin
-        uexName="uexDownloaderMgr" version="3.0.5" build="5">
-        <info>5:修改请求头的验证方法</info>
+        uexName="uexDownloaderMgr" version="3.0.10" build="10">
+       <info>10:修改clean方法</info>
+
+        <build>9:验证的请求头的中的appid与key不匹配</build>
+        <build>8:判断当前的验证的请求头的属于的应用</build>
+        <build>7:当调用setHeader接口时，设置的请求头会为空</build>
+        <build>6:修改获取APPkey的方法</build>
+        <build>5:添加请求头验证方法。</build>
         <build>4:支持https,导入证书。</build>
         <build>3:支持https</build>
         <build>2:为和文档保持统一增加uexDownloaderMgr.cancelDownload接口</build>
