@@ -58,6 +58,9 @@
 		7683B9561B33F01400B2BE29 /* EBrowserView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EBrowserView.h; sourceTree = "<group>"; };
 		7683B9571B33F03C00B2BE29 /* WWidget.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WWidget.h; sourceTree = "<group>"; };
 		7683B9581B33F04700B2BE29 /* WidgetOneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WidgetOneDelegate.h; sourceTree = "<group>"; };
+		76DBBEB91B8BFEBD00826DC7 /* ACEBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEBaseViewController.h; sourceTree = "<group>"; };
+		76DBBEBA1B8BFEBD00826DC7 /* EBrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBrowserController.h; sourceTree = "<group>"; };
+		76DBBEBB1B8BFEBD00826DC7 /* WWidgetMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWidgetMgr.h; sourceTree = "<group>"; };
 		A0EB589918AB601F00F133BB /* EUExDownloaderMgr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EUExDownloaderMgr.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -121,6 +124,9 @@
 		5A9FF2761890B13300E16C52 /* engineHeader */ = {
 			isa = PBXGroup;
 			children = (
+				76DBBEB91B8BFEBD00826DC7 /* ACEBaseViewController.h */,
+				76DBBEBA1B8BFEBD00826DC7 /* EBrowserController.h */,
+				76DBBEBB1B8BFEBD00826DC7 /* WWidgetMgr.h */,
 				7683B9581B33F04700B2BE29 /* WidgetOneDelegate.h */,
 				7683B9571B33F03C00B2BE29 /* WWidget.h */,
 				7683B9561B33F01400B2BE29 /* EBrowserView.h */,
