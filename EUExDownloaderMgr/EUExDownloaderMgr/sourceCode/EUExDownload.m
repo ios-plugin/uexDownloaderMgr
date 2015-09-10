@@ -104,6 +104,7 @@
  *  @param inName nil
  */
 -(void)requestIsVerify{
+    
     NSAutoreleasePool *pool = [[NSAutoreleasePool alloc]init];
     WWidget *curWgt = euexObj.meBrwView.mwWgt;
     NSString *time= [self getCurrentTS];
@@ -113,11 +114,14 @@
     }else{
         appkey = [NSString stringWithFormat:@"%@",curWgt.widgetOneId];
     }
+    
     NSString *str = [NSString stringWithFormat:@"%@:%@:%@",curWgt.appId,appkey,time];
+    
     str = [self md5:str];
     str = [NSString stringWithFormat:@"md5=%@;ts=%@;",str,time];
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:asiRequest.requestHeaders];
     [dict setObject:str forKey:@"appverify"];
+    [dict setObject:curWgt.appId forKey:@"x-mas-app-id"];
     [asiRequest setRequestHeaders:dict];
     [pool release];
 }

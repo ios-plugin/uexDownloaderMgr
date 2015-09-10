@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <uexplugins>
     <plugin
-        uexName="uexDownloaderMgr" version="3.0.5" build="5">
-        <info>5:修改请求头的验证方法</info>
+        uexName="uexDownloaderMgr" version="3.0.6" build="6">
+        <info>6:setAppVerify新增加appId的信息</info>
+        <build>5:修改请求头的验证方法</build>
         <build>4:支持https,导入证书。</build>
         <build>3:支持https</build>
         <build>2:为和文档保持统一增加uexDownloaderMgr.cancelDownload接口</build>
