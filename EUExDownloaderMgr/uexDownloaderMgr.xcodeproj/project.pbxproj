@@ -19,6 +19,7 @@
 		3CFA586718C08FA900B636E9 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFA586618C08FA900B636E9 /* libz.dylib */; };
 		3CFA58A318C091C900B636E9 /* EUExDownloaderMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFA588918C091C900B636E9 /* EUExDownloaderMgr.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3CFA58A418C091C900B636E9 /* EUExDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFA589A18C091C900B636E9 /* EUExDownload.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		42A2F4701BA294A7002CBB3B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A2F46F1BA294A7002CBB3B /* ImageIO.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -73,6 +74,7 @@
 		3CFA58A018C091C900B636E9 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
 		3CFA58A118C091C900B636E9 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
 		3CFA58A218C091C900B636E9 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		42A2F46F1BA294A7002CBB3B /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				42A2F4701BA294A7002CBB3B /* ImageIO.framework in Frameworks */,
 				3CFA586718C08FA900B636E9 /* libz.dylib in Frameworks */,
 				3CFA586318C08F8C00B636E9 /* libsqlite3.dylib in Frameworks */,
 				3CFA586118C08F0900B636E9 /* SystemConfiguration.framework in Frameworks */,
@@ -116,6 +119,7 @@
 		3CFA580B18C08E5700B636E9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				42A2F46F1BA294A7002CBB3B /* ImageIO.framework */,
 				3CFA586618C08FA900B636E9 /* libz.dylib */,
 				3CFA586218C08F8C00B636E9 /* libsqlite3.dylib */,
 				3CFA586018C08F0900B636E9 /* SystemConfiguration.framework */,
