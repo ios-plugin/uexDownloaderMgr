@@ -46,9 +46,6 @@
 		3CFA586018C08F0900B636E9 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		3CFA586218C08F8C00B636E9 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		3CFA586618C08FA900B636E9 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		3CFA588418C091C900B636E9 /* EUExBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EUExBase.h; sourceTree = "<group>"; };
-		3CFA588518C091C900B636E9 /* EUExBaseDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EUExBaseDefine.h; sourceTree = "<group>"; };
-		3CFA588618C091C900B636E9 /* EUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EUtility.h; sourceTree = "<group>"; };
 		3CFA588718C091C900B636E9 /* EUExDownloaderMgr-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "EUExDownloaderMgr-Prefix.pch"; path = "EUExDownloaderMgr/EUExDownloaderMgr-Prefix.pch"; sourceTree = SOURCE_ROOT; };
 		3CFA588818C091C900B636E9 /* EUExDownloaderMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = EUExDownloaderMgr.h; path = EUExDownloaderMgr/EUExDownloaderMgr.h; sourceTree = SOURCE_ROOT; };
 		3CFA588918C091C900B636E9 /* EUExDownloaderMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = EUExDownloaderMgr.m; path = EUExDownloaderMgr/EUExDownloaderMgr.m; sourceTree = SOURCE_ROOT; };
@@ -75,6 +72,13 @@
 		3CFA58A118C091C900B636E9 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
 		3CFA58A218C091C900B636E9 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
 		42A2F46F1BA294A7002CBB3B /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
+		42A2F4731BA29534002CBB3B /* BUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BUtility.h; sourceTree = "<group>"; };
+		42A2F4741BA29534002CBB3B /* EBrowserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBrowserView.h; sourceTree = "<group>"; };
+		42A2F4751BA29534002CBB3B /* EUExBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EUExBase.h; sourceTree = "<group>"; };
+		42A2F4761BA29534002CBB3B /* EUExBaseDefine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EUExBaseDefine.h; sourceTree = "<group>"; };
+		42A2F4771BA29534002CBB3B /* EUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EUtility.h; sourceTree = "<group>"; };
+		42A2F4781BA29534002CBB3B /* WidgetOneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetOneDelegate.h; sourceTree = "<group>"; };
+		42A2F4791BA29534002CBB3B /* WWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWidget.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,7 +141,7 @@
 		3CFA580E18C08E5700B636E9 /* uexDownloaderMgr */ = {
 			isa = PBXGroup;
 			children = (
-				3CFA588318C091C900B636E9 /* engineHeader */,
+				42A2F4721BA29534002CBB3B /* engineHeader */,
 				3CFA588718C091C900B636E9 /* EUExDownloaderMgr-Prefix.pch */,
 				3CFA588818C091C900B636E9 /* EUExDownloaderMgr.h */,
 				3CFA588918C091C900B636E9 /* EUExDownloaderMgr.m */,
@@ -145,17 +149,6 @@
 			);
 			path = uexDownloaderMgr;
 			sourceTree = "<group>";
-		};
-		3CFA588318C091C900B636E9 /* engineHeader */ = {
-			isa = PBXGroup;
-			children = (
-				3CFA588418C091C900B636E9 /* EUExBase.h */,
-				3CFA588518C091C900B636E9 /* EUExBaseDefine.h */,
-				3CFA588618C091C900B636E9 /* EUtility.h */,
-			);
-			name = engineHeader;
-			path = EUExDownloaderMgr/engineHeader;
-			sourceTree = SOURCE_ROOT;
 		};
 		3CFA588A18C091C900B636E9 /* sourceCode */ = {
 			isa = PBXGroup;
@@ -202,6 +195,21 @@
 			);
 			path = JSON;
 			sourceTree = "<group>";
+		};
+		42A2F4721BA29534002CBB3B /* engineHeader */ = {
+			isa = PBXGroup;
+			children = (
+				42A2F4731BA29534002CBB3B /* BUtility.h */,
+				42A2F4741BA29534002CBB3B /* EBrowserView.h */,
+				42A2F4751BA29534002CBB3B /* EUExBase.h */,
+				42A2F4761BA29534002CBB3B /* EUExBaseDefine.h */,
+				42A2F4771BA29534002CBB3B /* EUtility.h */,
+				42A2F4781BA29534002CBB3B /* WidgetOneDelegate.h */,
+				42A2F4791BA29534002CBB3B /* WWidget.h */,
+			);
+			name = engineHeader;
+			path = EUExDownloaderMgr/engineHeader;
+			sourceTree = SOURCE_ROOT;
 		};
 /* End PBXGroup section */
 
