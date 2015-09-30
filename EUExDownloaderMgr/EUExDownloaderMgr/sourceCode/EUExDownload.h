@@ -18,7 +18,7 @@
 	ASINetworkQueue *dQueue;
 	long long fileTotalLength;
 	long long appendFileSize;
-    ASIHTTPRequest *asiRequest;
+    //ASIHTTPRequest *asiRequest;
 }
 
 @property(nonatomic,retain)ASIHTTPRequest *asiRequest;

@@ -352,6 +352,7 @@
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/uexDownloaderMgr/";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DSTROOT = /tmp/uexDownloaderMgr.dst;
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EUExDownloaderMgr/EUExDownloaderMgr-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
@@ -374,6 +375,7 @@
 				CONFIGURATION_BUILD_DIR = "$(SRCROOT)/uexDownloaderMgr/";
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DSTROOT = /tmp/uexDownloaderMgr.dst;
+				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EUExDownloaderMgr/EUExDownloaderMgr-Prefix.pch";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
