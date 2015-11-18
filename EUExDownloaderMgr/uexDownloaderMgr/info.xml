@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <uexplugins>
     <plugin
-        uexName="uexDownloaderMgr" version="3.0.7" build="7">
-        <info>7:Xcode7修正</info>
+        uexName="uexDownloaderMgr" version="3.0.10" build="10">
+        <info>10:修改clean方法</info>
+        <build>9:验证的请求头的中的appid与key不匹配</build>
+        <build>8:判断当前的验证的请求头的属于的应用</build>
+        <build>7:Xcode7修正</build>
         <build>6:setAppVerify新增加appId的信息</build>
         <build>5:修改请求头的验证方法</build>
         <build>4:支持https,导入证书。</build>

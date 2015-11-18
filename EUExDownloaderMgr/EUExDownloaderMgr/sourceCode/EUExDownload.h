@@ -26,6 +26,7 @@
 @property(nonatomic,assign)EUExDownloaderMgr *euexObj;
 @property(nonatomic,copy)NSNumber *opID;
 @property(nonatomic) BOOL downFlag;
+@property(nonatomic,copy) NSString *verifyWithAppId;
 
 -(id)initWithUExObj:(EUExDownloaderMgr*)euexObj_;
 //-(void)downloadWithDlUrl:(NSString *)inDLUrl savePath:(NSString *)DLSavePath mode:(NSString *)inMode;

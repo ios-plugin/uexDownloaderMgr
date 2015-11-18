@@ -54,6 +54,9 @@
 		5A9FF2901890B13300E16C52 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
 		5A9FF2911890B13300E16C52 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
 		5A9FF2921890B13300E16C52 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		7627CEE21BFC0F6100DB16BC /* ACEBaseViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACEBaseViewController.h; sourceTree = "<group>"; };
+		7627CEE31BFC10CD00DB16BC /* EBrowserController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EBrowserController.h; sourceTree = "<group>"; };
+		7627CEE41BFC10E300DB16BC /* WWidgetMgr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WWidgetMgr.h; sourceTree = "<group>"; };
 		7683B9551B33EF8600B2BE29 /* BUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BUtility.h; sourceTree = "<group>"; };
 		7683B9561B33F01400B2BE29 /* EBrowserView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EBrowserView.h; sourceTree = "<group>"; };
 		7683B9571B33F03C00B2BE29 /* WWidget.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WWidget.h; sourceTree = "<group>"; };
@@ -121,6 +124,9 @@
 		5A9FF2761890B13300E16C52 /* engineHeader */ = {
 			isa = PBXGroup;
 			children = (
+				7627CEE41BFC10E300DB16BC /* WWidgetMgr.h */,
+				7627CEE31BFC10CD00DB16BC /* EBrowserController.h */,
+				7627CEE21BFC0F6100DB16BC /* ACEBaseViewController.h */,
 				7683B9581B33F04700B2BE29 /* WidgetOneDelegate.h */,
 				7683B9571B33F03C00B2BE29 /* WWidget.h */,
 				7683B9561B33F01400B2BE29 /* EBrowserView.h */,
