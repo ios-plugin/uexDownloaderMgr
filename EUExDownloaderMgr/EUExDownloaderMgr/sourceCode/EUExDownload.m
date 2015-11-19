@@ -21,8 +21,7 @@
 @synthesize euexObj;
 @synthesize opID,downFlag;
 @synthesize dQueue;
-@synthesize asiRequest;
-
+ 
 #pragma mark -
 #pragma mark - init
 
@@ -80,19 +79,19 @@
         NSData *PKCS12Data=[NSData dataWithContentsOfFile:[BUtility clientCertficatePath]];
         [BUtility extractIdentity:theApp.useCertificatePassWord andIdentity:&identity andTrust:&trust andCertChain:&certifica fromPKCS12Data:PKCS12Data];
         if (theApp.useCertificateControl) {
-            [asiRequest setValidatesSecureCertificate:YES];
-            [asiRequest setClientCertificateIdentity:identity];
+            [_asiRequest setValidatesSecureCertificate:YES];
+            [_asiRequest setClientCertificateIdentity:identity];
         }else{
-            [asiRequest setValidatesSecureCertificate:NO];
-            [asiRequest setClientCertificateIdentity:nil];
+            [_asiRequest setValidatesSecureCertificate:NO];
+            [_asiRequest setClientCertificateIdentity:nil];
         }
     }
     
-    [asiRequest setDelegate:self];
-    [asiRequest setDownloadProgressDelegate:self];
-    [asiRequest setTimeOutSeconds:120];
-    [asiRequest setDownloadDestinationPath:DLSavePath];
-    [asiRequest setTemporaryFileDownloadPath:tempPath];
+    [_asiRequest setDelegate:self];
+    [_asiRequest setDownloadProgressDelegate:self];
+    [_asiRequest setTimeOutSeconds:120];
+    [_asiRequest setDownloadDestinationPath:DLSavePath];
+    [_asiRequest setTemporaryFileDownloadPath:tempPath];
     
     
     if (headerDict) {
@@ -101,22 +100,22 @@
         if (self.verifyWithAppId) {
             [headerDict setObject:self.verifyWithAppId forKey:@"x-mas-app-id"];
         }
-        [asiRequest setRequestHeaders:headerDict];
+        [_asiRequest setRequestHeaders:headerDict];
         
     }else{
         headerStr = [self requestIsVerify];
-        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:asiRequest.requestHeaders];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:_asiRequest.requestHeaders];
         [dict setObject: headerStr forKeyedSubscript:@"appverify"];
         if (self.verifyWithAppId) {
         [dict setObject:self.verifyWithAppId forKey:@"x-mas-app-id"];
         }
-        [asiRequest setRequestHeaders:dict];
+        [_asiRequest setRequestHeaders:dict];
     }
     if (mode==1) {
-        [asiRequest setAllowResumeForFileDownloads:YES];
+        [_asiRequest setAllowResumeForFileDownloads:YES];
     }
-    [asiRequest setUserInfo:[NSDictionary dictionaryWithObject:inDLUrl forKey:@"reqUrl"]];
-    [dQueue addOperation:asiRequest];
+    [_asiRequest setUserInfo:[NSDictionary dictionaryWithObject:inDLUrl forKey:@"reqUrl"]];
+    [dQueue addOperation:_asiRequest];
 }
 
 /**
@@ -284,10 +283,10 @@
         [opID release];
         opID = nil;
     }
-    if (asiRequest) {
-        [asiRequest setDelegate:nil];
-        [asiRequest release];
-        asiRequest = nil;
+    if (_asiRequest) {
+        [_asiRequest setDelegate:nil];
+        [_asiRequest release];
+        _asiRequest = nil;
     }
 	[super dealloc];
 }

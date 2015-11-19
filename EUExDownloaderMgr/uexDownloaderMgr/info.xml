@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <uexplugins>
     <plugin
-        uexName="uexDownloaderMgr" version="3.0.10" build="10">
-        <info>10:修改clean方法</info>
+        uexName="uexDownloaderMgr" version="3.0.11" build="11">
+        <info>11:修改请求的变量</info>
+        <build>10:修改clean方法</build>
         <build>9:验证的请求头的中的appid与key不匹配</build>
         <build>8:判断当前的验证的请求头的属于的应用</build>
         <build>7:Xcode7修正</build>
