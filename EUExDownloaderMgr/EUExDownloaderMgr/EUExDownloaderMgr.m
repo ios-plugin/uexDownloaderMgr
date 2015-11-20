@@ -66,6 +66,7 @@
         if (downloadObj) {
             
             self.headerDict = [inJsonHeaderStr JSONValue];
+            //NSLog(@"----2--%@",self.headerDict);
             
         }
     }
@@ -181,6 +182,7 @@
 			if (dloadObj.downFlag == YES) {
 				dloadObj.downFlag = NO;
 				//[dloadObj downloadWithDlUrl:inDLUrl savePath:DLSavePath mode:inMode];
+               // NSLog(@"----1--%@",self.headerDict);
                 [dloadObj downloadWithDlUrl:inDLUrl savePath:DLSavePath mode:inMode headerDict:self.headerDict];
 			}else {
 				return;
@@ -223,6 +225,9 @@
 		}
 		[downObjDict removeAllObjects];
 	}
+    if (meBrwView) {
+        meBrwView = nil;
+    }
 }
 
 @end

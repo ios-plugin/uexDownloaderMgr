@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3CFA580D18C08E5700B636E9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFA580C18C08E5700B636E9 /* Foundation.framework */; };
-		3CFA585518C08E8D00B636E9 /* libAppCanEngine_IOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFA585418C08E8D00B636E9 /* libAppCanEngine_IOS.a */; };
 		3CFA585718C08ED200B636E9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFA585618C08ED200B636E9 /* UIKit.framework */; };
 		3CFA585918C08EE900B636E9 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFA585818C08EE900B636E9 /* CoreTelephony.framework */; };
 		3CFA585B18C08EF000B636E9 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3CFA585A18C08EF000B636E9 /* MapKit.framework */; };
@@ -20,6 +19,7 @@
 		3CFA58A318C091C900B636E9 /* EUExDownloaderMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFA588918C091C900B636E9 /* EUExDownloaderMgr.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		3CFA58A418C091C900B636E9 /* EUExDownload.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CFA589A18C091C900B636E9 /* EUExDownload.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		42A2F4701BA294A7002CBB3B /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A2F46F1BA294A7002CBB3B /* ImageIO.framework */; };
+		7627CEF81BFC1BAE00DB16BC /* libAppCanEngine_IOS.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7627CEF71BFC1BAE00DB16BC /* libAppCanEngine_IOS.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -37,7 +37,6 @@
 /* Begin PBXFileReference section */
 		3CFA580918C08E5700B636E9 /* uexDownloaderMgr.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = uexDownloaderMgr.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		3CFA580C18C08E5700B636E9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		3CFA585418C08E8D00B636E9 /* libAppCanEngine_IOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libAppCanEngine_IOS.a; path = ../libAppCanEngine_IOS.a; sourceTree = "<group>"; };
 		3CFA585618C08ED200B636E9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		3CFA585818C08EE900B636E9 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		3CFA585A18C08EF000B636E9 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
@@ -79,6 +78,10 @@
 		42A2F4771BA29534002CBB3B /* EUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EUtility.h; sourceTree = "<group>"; };
 		42A2F4781BA29534002CBB3B /* WidgetOneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WidgetOneDelegate.h; sourceTree = "<group>"; };
 		42A2F4791BA29534002CBB3B /* WWidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWidget.h; sourceTree = "<group>"; };
+		7627CEF01BFC18B400DB16BC /* ACEBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEBaseViewController.h; sourceTree = "<group>"; };
+		7627CEF11BFC18B400DB16BC /* EBrowserController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EBrowserController.h; sourceTree = "<group>"; };
+		7627CEF21BFC18B400DB16BC /* WWidgetMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WWidgetMgr.h; sourceTree = "<group>"; };
+		7627CEF71BFC1BAE00DB16BC /* libAppCanEngine_IOS.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAppCanEngine_IOS.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,13 +92,13 @@
 				42A2F4701BA294A7002CBB3B /* ImageIO.framework in Frameworks */,
 				3CFA586718C08FA900B636E9 /* libz.dylib in Frameworks */,
 				3CFA586318C08F8C00B636E9 /* libsqlite3.dylib in Frameworks */,
+				7627CEF81BFC1BAE00DB16BC /* libAppCanEngine_IOS.a in Frameworks */,
 				3CFA586118C08F0900B636E9 /* SystemConfiguration.framework in Frameworks */,
 				3CFA585F18C08F0000B636E9 /* MobileCoreServices.framework in Frameworks */,
 				3CFA585D18C08EF800B636E9 /* AudioToolbox.framework in Frameworks */,
 				3CFA585B18C08EF000B636E9 /* MapKit.framework in Frameworks */,
 				3CFA585918C08EE900B636E9 /* CoreTelephony.framework in Frameworks */,
 				3CFA585718C08ED200B636E9 /* UIKit.framework in Frameworks */,
-				3CFA585518C08E8D00B636E9 /* libAppCanEngine_IOS.a in Frameworks */,
 				3CFA580D18C08E5700B636E9 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -123,6 +126,7 @@
 		3CFA580B18C08E5700B636E9 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				7627CEF71BFC1BAE00DB16BC /* libAppCanEngine_IOS.a */,
 				42A2F46F1BA294A7002CBB3B /* ImageIO.framework */,
 				3CFA586618C08FA900B636E9 /* libz.dylib */,
 				3CFA586218C08F8C00B636E9 /* libsqlite3.dylib */,
@@ -132,7 +136,6 @@
 				3CFA585A18C08EF000B636E9 /* MapKit.framework */,
 				3CFA585818C08EE900B636E9 /* CoreTelephony.framework */,
 				3CFA585618C08ED200B636E9 /* UIKit.framework */,
-				3CFA585418C08E8D00B636E9 /* libAppCanEngine_IOS.a */,
 				3CFA580C18C08E5700B636E9 /* Foundation.framework */,
 			);
 			name = Frameworks;
@@ -199,6 +202,9 @@
 		42A2F4721BA29534002CBB3B /* engineHeader */ = {
 			isa = PBXGroup;
 			children = (
+				7627CEF01BFC18B400DB16BC /* ACEBaseViewController.h */,
+				7627CEF11BFC18B400DB16BC /* EBrowserController.h */,
+				7627CEF21BFC18B400DB16BC /* WWidgetMgr.h */,
 				42A2F4731BA29534002CBB3B /* BUtility.h */,
 				42A2F4741BA29534002CBB3B /* EBrowserView.h */,
 				42A2F4751BA29534002CBB3B /* EUExBase.h */,
@@ -303,7 +309,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				ONLY_ACTIVE_ARCH = NO;
 				SDKROOT = iphoneos;
 				VALID_ARCHS = "armv7 armv7s";
@@ -337,7 +343,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 				VALID_ARCHS = "armv7 armv7s";
@@ -355,11 +361,8 @@
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EUExDownloaderMgr/EUExDownloaderMgr-Prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)";
 				ONLY_ACTIVE_ARCH = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -378,11 +381,8 @@
 				ENABLE_BITCODE = NO;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EUExDownloaderMgr/EUExDownloaderMgr-Prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(SRCROOT)/../",
-				);
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)";
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;

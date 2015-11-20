@@ -5,6 +5,7 @@
 //  Created by AppCan on 11-10-31.
 //  Copyright 2011 AppCan. All rights reserved.
 //
+#import <CommonCrypto/CommonCrypto.h>
 #import "EUtility.h"
 #import "EUExDownload.h"
 #import "EUExDownloaderMgr.h"
@@ -12,12 +13,15 @@
 #import "EBrowserView.h"
 #import "WWidget.h"
 #import "WidgetOneDelegate.h"
-#import <CommonCrypto/CommonCrypto.h>
+#import "ACEBaseViewController.h"
+#import "EBrowserController.h"
+#import "WWidgetMgr.h"
+
 @implementation EUExDownload
 @synthesize euexObj;
 @synthesize opID,downFlag;
 @synthesize dQueue;
-
+ 
 #pragma mark -
 #pragma mark - init
 
@@ -37,6 +41,7 @@
 -(void)downloadWithDlUrl:(NSString *)inDLUrl savePath:(NSString *)DLSavePath mode:(NSString *)inMode headerDict:(NSMutableDictionary *)headerDict{
     appendFileSize = 0;
     fileTotalLength = 0;
+    NSString *headerStr = nil;
     //初始化Documents路径
     NSString *path = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
     //初始化临时文件路径
@@ -81,6 +86,7 @@
             [_asiRequest setClientCertificateIdentity:nil];
         }
     }
+    
     [_asiRequest setDelegate:self];
     [_asiRequest setDownloadProgressDelegate:self];
     [_asiRequest setTimeOutSeconds:120];
@@ -89,7 +95,21 @@
     
     
     if (headerDict) {
+        headerStr = [self requestIsVerify];
+        [headerDict setObject:headerStr forKeyedSubscript:@"appverify"];
+        if (self.verifyWithAppId) {
+            [headerDict setObject:self.verifyWithAppId forKey:@"x-mas-app-id"];
+        }
         [_asiRequest setRequestHeaders:headerDict];
+        
+    }else{
+        headerStr = [self requestIsVerify];
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:_asiRequest.requestHeaders];
+        [dict setObject: headerStr forKeyedSubscript:@"appverify"];
+        if (self.verifyWithAppId) {
+        [dict setObject:self.verifyWithAppId forKey:@"x-mas-app-id"];
+        }
+        [_asiRequest setRequestHeaders:dict];
     }
     if (mode==1) {
         [_asiRequest setAllowResumeForFileDownloads:YES];
@@ -103,28 +123,36 @@
  *
  *  @param inName nil
  */
--(void)requestIsVerify{
-    
-    NSAutoreleasePool *pool = [[NSAutoreleasePool alloc]init];
+-(NSString*)requestIsVerify{
     WWidget *curWgt = euexObj.meBrwView.mwWgt;
     NSString *time= [self getCurrentTS];
-    NSString *appkey = nil;
-    if (curWgt.appKey) {
-        appkey = [NSString stringWithFormat:@"%@",curWgt.appKey];
-    }else{
-        appkey = [NSString stringWithFormat:@"%@",curWgt.widgetOneId];
+    NSString *appId = @"";
+    NSString *appKey = @"";
+   
+    NSString *pluginStr = @"widget/plugin";
+    if ([curWgt.indexUrl rangeOfString:pluginStr].length == [pluginStr length]) {
+        WWidgetMgr *wgtMgr = euexObj.meBrwView.meBrwCtrler.mwWgtMgr;
+        WWidget *mainWgt = [wgtMgr mainWidget];
+        
+        appId = mainWgt.appId;
+        appKey = mainWgt.widgetOneId;
+        
+        
+    } else {
+        if (curWgt.appKey) {
+            appKey = [NSString stringWithFormat:@"%@",curWgt.appKey];
+        }else{
+            appKey = [NSString stringWithFormat:@"%@",curWgt.widgetOneId];
+        }
+        appId = curWgt.appId;
     }
-    
-    NSString *str = [NSString stringWithFormat:@"%@:%@:%@",curWgt.appId,appkey,time];
-    
+    self.verifyWithAppId = appId;
+    NSString *str = [NSString stringWithFormat:@"%@:%@:%@",appId,appKey,time];
     str = [self md5:str];
     str = [NSString stringWithFormat:@"md5=%@;ts=%@;",str,time];
-    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:_asiRequest.requestHeaders];
-    [dict setObject:str forKey:@"appverify"];
-    [dict setObject:curWgt.appId forKey:@"x-mas-app-id"];
-    [_asiRequest setRequestHeaders:dict];
-    [pool release];
+     return str;
 }
+
 
 #pragma mark -
 #pragma mark - request delegate
@@ -213,6 +241,7 @@
     }
 	return YES;
 }
+
 #pragma mark -
 #pragma mark - md5
 
@@ -243,6 +272,7 @@
     //    return timeString;
 }
 
+
 -(void)dealloc{
 	if (dQueue) {
         [self closeDownload];
@@ -252,6 +282,11 @@
     if (opID) {
         [opID release];
         opID = nil;
+    }
+    if (_asiRequest) {
+        [_asiRequest setDelegate:nil];
+        [_asiRequest release];
+        _asiRequest = nil;
     }
 	[super dealloc];
 }
