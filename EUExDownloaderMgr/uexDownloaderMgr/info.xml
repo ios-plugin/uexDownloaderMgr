@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <uexplugins>
     <plugin
-        uexName="uexDownloaderMgr" version="3.0.11" build="11">
-        <info>11:修改请求的变量</info>
+        uexName="uexDownloaderMgr" version="3.0.12" build="12">
+        <info>12:修改了下载时进度条不动的BUG</info>
+        <build>11:修改请求的变量</build>
         <build>10:修改clean方法</build>
         <build>9:验证的请求头的中的appid与key不匹配</build>
         <build>8:判断当前的验证的请求头的属于的应用</build>

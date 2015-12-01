@@ -175,20 +175,18 @@
 
 -(void)request:(ASIHTTPRequest *)request didReceiveBytes:(long long)bytes{
  	appendFileSize+=bytes;
-    //	int percent = 0;
-    //
-    //	if (fileTotalLength!=0) {
-    //		 percent= appendFileSize*100/(fileTotalLength);
-    //	}else {
-    //		 percent = 100;
-    //	}
-    //	[euexObj uexSuccessWithOpId:[self.opID intValue] fileSize:fileTotalLength percent:percent status:UEX_DOWNLOAD_DOWNLOADING];
+    	int percent = 0;
+     percent= appendFileSize*100/(fileTotalLength);
+    	if (percent > 100) {
+            percent = 100;
+        }
+    [euexObj uexSuccessWithOpId:[self.opID intValue] fileSize:fileTotalLength percent:percent status:UEX_DOWNLOAD_DOWNLOADING];
 }
 
 -(void)setProgress:(float)newProgress{
-	if (fileTotalLength>0) {
-        [euexObj uexSuccessWithOpId:[self.opID intValue] fileSize:(NSInteger)fileTotalLength percent:newProgress*100 status:UEX_DOWNLOAD_DOWNLOADING];
-	}
+//	if (fileTotalLength>0) {
+//        [euexObj uexSuccessWithOpId:[self.opID intValue] fileSize:(NSInteger)fileTotalLength percent:newProgress*100 status:UEX_DOWNLOAD_DOWNLOADING];
+//	}
 }
 
 -(void)requestFailed:(ASIHTTPRequest *)request{
