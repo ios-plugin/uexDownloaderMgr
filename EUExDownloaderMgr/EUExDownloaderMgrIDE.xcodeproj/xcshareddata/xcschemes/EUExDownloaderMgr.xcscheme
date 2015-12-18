@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "3CFA580818C08E5700B636E9"
-               BuildableName = "uexDownloaderMgr.dylib"
-               BlueprintName = "uexDownloaderMgr"
-               ReferencedContainer = "container:uexDownloaderMgr.xcodeproj">
+               BlueprintIdentifier = "5A9FF24C1890B0A400E16C52"
+               BuildableName = "uexDownloaderMgr.framework"
+               BlueprintName = "EUExDownloaderMgr"
+               ReferencedContainer = "container:EUExDownloaderMgrIDE.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,10 +45,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3CFA580818C08E5700B636E9"
-            BuildableName = "uexDownloaderMgr.dylib"
-            BlueprintName = "uexDownloaderMgr"
-            ReferencedContainer = "container:uexDownloaderMgr.xcodeproj">
+            BlueprintIdentifier = "5A9FF24C1890B0A400E16C52"
+            BuildableName = "uexDownloaderMgr.framework"
+            BlueprintName = "EUExDownloaderMgr"
+            ReferencedContainer = "container:EUExDownloaderMgrIDE.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -63,10 +63,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "3CFA580818C08E5700B636E9"
-            BuildableName = "uexDownloaderMgr.dylib"
-            BlueprintName = "uexDownloaderMgr"
-            ReferencedContainer = "container:uexDownloaderMgr.xcodeproj">
+            BlueprintIdentifier = "5A9FF24C1890B0A400E16C52"
+            BuildableName = "uexDownloaderMgr.framework"
+            BlueprintName = "EUExDownloaderMgr"
+            ReferencedContainer = "container:EUExDownloaderMgrIDE.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
