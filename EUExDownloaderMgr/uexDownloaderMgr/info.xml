@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <uexplugins>
     <plugin
-        uexName="uexDownloaderMgr" version="3.0.13" build="13">
-        <info>13:添加IDE支持</info>
+        uexName="uexDownloaderMgr" version="3.0.14" build="14">
+        <info>14:修复在复用窗口中使用时回调丢失的bug</info>
+        <build>13:添加IDE支持</build>
         <build>12:修改了下载时进度条不动的BUG</build>
         <build>11:修改请求的变量</build>
         <build>10:修改clean方法</build>
