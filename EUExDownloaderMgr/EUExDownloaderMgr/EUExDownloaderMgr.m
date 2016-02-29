@@ -225,9 +225,9 @@
 		}
 		[downObjDict removeAllObjects];
 	}
-    if (meBrwView) {
-        meBrwView = nil;
-    }
+//    if (meBrwView) {
+//        meBrwView = nil;
+//    }
 }
 
 @end
