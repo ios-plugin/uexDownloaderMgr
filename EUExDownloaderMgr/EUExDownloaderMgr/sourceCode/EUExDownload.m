@@ -8,7 +8,7 @@
 #import <CommonCrypto/CommonCrypto.h>
 #import "EUtility.h"
 #import "EUExDownload.h"
-#import "EUExDownloaderMgr.h"
+#import "EUExDownloaderMgr_old.h"
 #import "BUtility.h"
 #import "EBrowserView.h"
 #import "WWidget.h"
@@ -25,7 +25,7 @@
 #pragma mark -
 #pragma mark - init
 
--(id)initWithUExObj:(EUExDownloaderMgr*)euexObj_ {
+-(id)initWithUExObj:(EUExDownloaderMgr_old*)euexObj_ {
 	if (self = [super init]) {
         euexObj = euexObj_;
 		if (!dQueue) {
@@ -198,7 +198,6 @@
 	NSDateFormatter *df = [[NSDateFormatter alloc] init];
 	[df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
 	NSString *dateString = [df stringFromDate:[NSDate date]];
-	[df release];
 	[udf setValue:dateString forKey:[NSString stringWithFormat:@"%@_lastTime",urlstr]];
  	[euexObj uexSuccessWithOpId:[self.opID intValue] fileSize:0 percent:0 status:UEX_DOWNLOAD_FAIL];
 	[self removeRequestFromQueue:urlstr];
@@ -233,7 +232,7 @@
 		NSDateFormatter *df = [[NSDateFormatter alloc] init];
 		[df setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
 		NSString *dateString = [df stringFromDate:[NSDate date]];
-		[df release];
+
 		[udf setValue:dateString forKey:[NSString stringWithFormat:@"%@_lastTime",urlstr]];
 		[request clearDelegatesAndCancel];
     }
@@ -274,18 +273,16 @@
 -(void)dealloc{
 	if (dQueue) {
         [self closeDownload];
-		[dQueue release];
 		dQueue = nil;
 	}
     if (opID) {
-        [opID release];
+
         opID = nil;
     }
     if (_asiRequest) {
         [_asiRequest setDelegate:nil];
-        [_asiRequest release];
         _asiRequest = nil;
     }
-	[super dealloc];
+
 }
 @end

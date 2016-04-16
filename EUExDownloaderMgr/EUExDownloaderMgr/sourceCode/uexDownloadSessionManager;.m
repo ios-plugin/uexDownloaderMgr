@@ -1,10 +1,10 @@
 /**
  *
- *	@file   	: EUExDownloaderMgr.h  in EUExDownloaderMgr
+ *	@file   	: uexDownloadSessionManager;.m  in EUExDownloaderMgr
  *
  *	@author 	: CeriNo 
  * 
- *	@date   	: Created on 16/4/15.
+ *	@date   	: Created on 16/4/16.
  *
  *	@copyright 	: 2016 The AppCan Open Source Project.
  *
@@ -21,15 +21,8 @@
  *
  */
 
+#import "uexDownloadSessionManager;.h"
 
-#import <Foundation/Foundation.h>
-#import "EUExBase.h"
-
-
-
-@interface EUExDownloaderMgr : EUExBase
-
-
-
+@implementation uexDownloadSessionManager_
 
 @end

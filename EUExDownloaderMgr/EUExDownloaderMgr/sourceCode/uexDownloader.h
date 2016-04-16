@@ -1,6 +1,6 @@
 /**
  *
- *	@file   	: EUExDownloaderMgr.h  in EUExDownloaderMgr
+ *	@file   	: uexDownloader.h  in EUExDownloaderMgr
  *
  *	@author 	: CeriNo 
  * 
@@ -23,13 +23,29 @@
 
 
 #import <Foundation/Foundation.h>
-#import "EUExBase.h"
+
+typedef NS_OPTIONS(NSInteger, uexDownloaderCancelOption){
+    uexDownloaderCancelOptionDefault = 0,
+    uexDownloaderCancelOptionClearCache = 1 << 0,
+};
 
 
+@class EUExDownloaderMgr;
+@class uexDownloadInfo;
 
-@interface EUExDownloaderMgr : EUExBase
+@interface uexDownloader : NSObject
+
+@property (nonatomic,strong)NSNumber *identifier;
+@property (nonatomic,weak)EUExDownloaderMgr* euexObj;
+@property (nonatomic,strong)NSDictionary<NSString *,NSString *> *headers;
+
+- (instancetype)initWithIdentifier:(NSInteger)identifier euexObj:(EUExDownloaderMgr *)euexObj;
+- (void)getPreparedWithDownloadInfo:(uexDownloadInfo *)info;
+- (void)startDownload;
 
 
+- (void)cancelDownloadWithOption:(uexDownloaderCancelOption)option;
 
+- (void)clean;
 
 @end

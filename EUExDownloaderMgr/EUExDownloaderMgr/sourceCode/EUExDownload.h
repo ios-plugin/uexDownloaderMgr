@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 #import "ASIHTTPRequest.h"
 #import "ASINetworkQueue.h"
-@class EUExDownloaderMgr;
+@class EUExDownloaderMgr_old;
  
 @interface EUExDownload : NSObject <ASIHTTPRequestDelegate,ASIProgressDelegate>{
-	EUExDownloaderMgr *euexObj;
+	__unsafe_unretained EUExDownloaderMgr_old *euexObj;
 	NSNumber *opID;
 	BOOL downFlag;
 	ASINetworkQueue *dQueue;
@@ -23,12 +23,12 @@
 
 @property(nonatomic,retain)ASIHTTPRequest *asiRequest;
 @property(nonatomic,retain)ASINetworkQueue *dQueue;
-@property(nonatomic,assign)EUExDownloaderMgr *euexObj;
+@property(nonatomic,assign)EUExDownloaderMgr_old *euexObj;
 @property(nonatomic,copy)NSNumber *opID;
 @property(nonatomic) BOOL downFlag;
 @property(nonatomic,copy) NSString *verifyWithAppId;
 
--(id)initWithUExObj:(EUExDownloaderMgr*)euexObj_;
+-(id)initWithUExObj:(EUExDownloaderMgr_old*)euexObj_;
 //-(void)downloadWithDlUrl:(NSString *)inDLUrl savePath:(NSString *)DLSavePath mode:(NSString *)inMode;
 -(void)downloadWithDlUrl:(NSString *)inDLUrl savePath:(NSString *)DLSavePath mode:(NSString *)inMode headerDict:(NSMutableDictionary *)headerDict;
 -(BOOL)closeDownload;

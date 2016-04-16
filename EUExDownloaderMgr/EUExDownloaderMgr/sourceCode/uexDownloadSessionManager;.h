@@ -1,10 +1,10 @@
 /**
  *
- *	@file   	: EUExDownloaderMgr.h  in EUExDownloaderMgr
+ *	@file   	: uexDownloadSessionManager;.h  in EUExDownloaderMgr
  *
  *	@author 	: CeriNo 
  * 
- *	@date   	: Created on 16/4/15.
+ *	@date   	: Created on 16/4/16.
  *
  *	@copyright 	: 2016 The AppCan Open Source Project.
  *
@@ -23,13 +23,10 @@
 
 
 #import <Foundation/Foundation.h>
-#import "EUExBase.h"
+#import <AFNetworking/AFNetworking.h>
+@interface uexDownloadSessionManager_ : NSObject
 
 
-
-@interface EUExDownloaderMgr : EUExBase
-
-
-
++ (instancetype)defaultManager;
 
 @end
