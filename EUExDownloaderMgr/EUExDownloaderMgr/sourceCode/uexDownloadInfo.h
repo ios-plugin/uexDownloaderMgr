@@ -22,23 +22,35 @@
  */
 
 
+
 #import <Foundation/Foundation.h>
+
+
+typedef NS_ENUM(NSInteger,uexDownloadInfoStatus){
+    uexDownloadInfoStatusDownloading = 0,
+    uexDownloadInfoStatusCompleted,
+    uexDownloadInfoStatusFailed,
+    uexDownloadInfoStatusSuspended,
+    
+};
+
 
 @interface uexDownloadInfo : NSObject<NSSecureCoding>
 @property (nonatomic,strong)NSString *downloadPath;
 @property (nonatomic,strong)NSString *savePath;
 @property (nonatomic,strong)NSDate *lastOperationTime;
 @property (nonatomic,assign)int64_t bytesWritten;
-@property (nonatomic,assign)int64_t totalBytesWritten;
+@property (nonatomic,assign)int64_t fileSize;
 
 @property (nonatomic,strong)NSDictionary<NSString *,NSString *> *headers;
 @property (nonatomic,strong)NSData *resumeCache;
 @property (nonatomic,assign,getter=isResumable)BOOL resumable;
+@property (nonatomic,assign)uexDownloadInfoStatus status;
 
 
 
 
-- (instancetype)initWithDoanloadPath:(NSString *)downloadPath savePath:(NSString *)savePath headers:(NSDictionary<NSString *,NSString *> *)headers NS_DESIGNATED_INITIALIZER ;
+- (instancetype)initWithDownloadPath:(NSString *)downloadPath savePath:(NSString *)savePath headers:(NSDictionary<NSString *,NSString *> *)headers NS_DESIGNATED_INITIALIZER ;
 
 + (instancetype)cachedInfoWithDownloadPath:(NSString *)downloadPath;
 
@@ -48,7 +60,12 @@
 //下载的request
 - (NSURLRequest *)downloadRequest;
 //info的dictionary形式表述
-- (NSDictionary *)infoDict;
+- (NSDictionary *)dictDescription;
+
+
+
+
+
 
 //缓存info到本地
 - (void)cacheForResuming;
@@ -65,14 +82,5 @@
 
 @end
 
-@interface NSString (uexDownloaderMgr)
-//获取MD5字符串
-- (instancetype)uexDownloader_MD5;
-@end
 
-@interface NSDate (uexDownloaderMgr)
-//NSDate的时间戳字符串
-- (NSString *)uexDownloader_timestamp;
-
-@end
 

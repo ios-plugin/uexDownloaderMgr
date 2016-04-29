@@ -24,17 +24,17 @@
 
 #import <Foundation/Foundation.h>
 
-typedef NS_OPTIONS(NSInteger, uexDownloaderCancelOption){
-    uexDownloaderCancelOptionDefault = 0,
-    uexDownloaderCancelOptionClearCache = 1 << 0,
-};
+
 
 
 @class EUExDownloaderMgr;
 @class uexDownloadInfo;
 
-@interface uexDownloader : NSObject
 
+
+
+@interface uexDownloader : NSObject
+@property (nonatomic,strong)uexDownloadInfo *info;
 @property (nonatomic,strong)NSNumber *identifier;
 @property (nonatomic,weak)EUExDownloaderMgr* euexObj;
 @property (nonatomic,strong)NSDictionary<NSString *,NSString *> *headers;

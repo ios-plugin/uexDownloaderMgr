@@ -25,23 +25,19 @@
 #import "uexDownloadInfo.h"
 #import "EUExDownloaderMgr.h"
 #import <AFNetworking/AFNetworking.h>
+#import "EXTScope.h"
 #import "EUtility.h"
 #import "uexDownloadSessionManager.h"
-typedef NS_ENUM(NSInteger,uexDownloaderStatus) {
-    uexDownloaderStatusInitialized = -1,
-    uexDownloaderStatusDownloading = 0,
-    uexDownloaderStatusSuccess,
-    uexDownloaderStatusFailed,
-    uexDownloaderStatusCancelled
-};
-
+#import <libkern/OSAtomic.h>
 
 @interface uexDownloader()
 @property (nonatomic,assign)CGFloat progress;
-@property (nonatomic,assign)uexDownloaderStatus status;
-@property (nonatomic,strong)uexDownloadInfo *info;
 @property (nonatomic,strong)NSURLSessionDownloadTask *task;
 @property (nonatomic,weak)uexDownloadSessionManager *manager;
+
+@property (nonatomic,assign)BOOL taskCancelledByUser;
+
+
 @end
 
 @implementation uexDownloader
@@ -54,18 +50,21 @@ typedef NS_ENUM(NSInteger,uexDownloaderStatus) {
         _euexObj = euexObj;
         _manager = [uexDownloadSessionManager defaultManager];
         _progress = 0;
-        _status = uexDownloaderStatusInitialized;
+        _headers = [uexDownloadHelper AppCanHTTPHeadersWithEUExObj:self.euexObj];
     }
     return self;
 }
 
 - (void)setHeaders:(NSDictionary<NSString *,NSString *> *)headers{
-    _headers = headers;
+    
+    __block NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:[uexDownloadHelper AppCanHTTPHeadersWithEUExObj:self.euexObj]];
+    [headers enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+        [dict setValue:obj forKey:key];
+    }];
+    _headers = [dict copy];
     if (self.info) {
         self.info.headers = headers;
     }
-    
-    
 }
 - (void)setProgress:(CGFloat)progress{
     _progress = progress;
@@ -81,45 +80,94 @@ typedef NS_ENUM(NSInteger,uexDownloaderStatus) {
 
 - (void)getPreparedWithDownloadInfo:(uexDownloadInfo *)info{
     self.info = info;
-    BOOL shouldUpdateRequest = NO;
-    if(self.headers){
-        self.info.headers = self.headers;
-        shouldUpdateRequest = YES;
-    }
+    self.info.headers = self.headers;
     if (info.resumable && info.resumeCache) {
-        if(shouldUpdateRequest){
-            [info updataRequestInResumeCache];
-        }
+
+        [info updataRequestInResumeCache];
         [self setupResumeTask];
+    }else{
+        [self setupNewTask];
     }
-    [self.manager setDownloadTaskDidResumeBlock:^(NSURLSession * _Nonnull session, NSURLSessionDownloadTask * _Nonnull downloadTask, int64_t fileOffset, int64_t expectedTotalBytes) {
-        <#code#>
-    }];
+
+}
+
+- (void)setupNewTask{
+    self.task = [self.manager downloadTaskWithRequest:[self.info downloadRequest]
+                                             progress:^(NSProgress * _Nonnull downloadProgress) {
+                                                 [self updateInfo:downloadProgress];
+                                             }
+                                          destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+                                              return [self saveURL];
+                                          }
+                                    completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+
+                                        [self handleDownloaderResult:error];
+                                    }];
 }
 
 - (void)setupResumeTask{
     self.task = [self.manager downloadTaskWithResumeData:self.info.resumeCache
                                                 progress:^(NSProgress * _Nonnull downloadProgress) {
                                                     [self updateInfo:downloadProgress];
-                                                    
-                                                } destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
+                                                }
+                                             destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
                                                     return [self saveURL];
-                                                } completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-                                                    if (error && error.userInfo[]) {
-                                                        
-                                                    }
+                                                }
+                                       completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+                                                    [self handleDownloaderResult:error];
                                                 }];
+}
+
+- (void)handleDownloaderResult:(NSError *)error{
+    if (error) {
+        if (self.info.status == uexDownloadInfoStatusDownloading) {
+            self.info.status = uexDownloadInfoStatusFailed;
+        }
+        [self.info cacheForResuming];
+        [self onStatusCallback];
+        UEXLog(@"download fail!url:%@,error:%@",self.info.downloadPath,[error localizedDescription]);
+    }else{
+        self.info.status = uexDownloadInfoStatusCompleted;
+        [self.info cacheForResuming];
+        [self onStatusCallback];
+        UEXLog(@"download success!url:%@",self.info.downloadPath);
+    }
+}
+
+
+
+- (void)startDownload{
+    [self.task resume];
+}
+
+- (void)clean{
+    [self cancelDownloadWithOption:uexDownloaderCancelOptionDefault];
+}
+
+- (void)cancelDownloadWithOption:(uexDownloaderCancelOption)option{
+
+    self.info.status = uexDownloadInfoStatusSuspended;
+    if(!(option & uexDownloaderCancelOptionClearCache) && self.info.resumable){
+        @weakify(self);
+        [self.task cancelByProducingResumeData:^(NSData * _Nullable resumeData) {
+            @strongify(self);
+            self.info.resumeCache = resumeData;
+            [self.info cacheForResuming];
+        }];
+        return;
+    }
+    [self.task cancel];
 }
 
 - (void)updateInfo:(NSProgress *)downloadProgress{
     
-    self.info.totalBytesWritten = downloadProgress.totalUnitCount;
+    self.info.fileSize = downloadProgress.totalUnitCount;
     self.info.bytesWritten = downloadProgress.completedUnitCount;
+    self.info.status = uexDownloadInfoStatusDownloading;
     static NSTimeInterval kInfoMinimumAutoSaveInterval = 5.0;
     NSDate *currentDate = [NSDate date];
     BOOL shouldSave = [currentDate timeIntervalSinceDate:self.info.lastOperationTime] > kInfoMinimumAutoSaveInterval ;
-    self.info.lastOperationTime = currentDate;
-    self.status = uexDownloaderStatusDownloading;
+    
     self.progress = downloadProgress.fractionCompleted;
     [self onStatusCallback];
     if(shouldSave){
@@ -127,18 +175,31 @@ typedef NS_ENUM(NSInteger,uexDownloaderStatus) {
     }
 }
 - (NSURL *)saveURL{
-    NSString *savePath = [self.euexObj absPath:self.info.savePath];
-    NSURL *URL = [NSURL URLWithString:savePath];
-    if (!URL) {
-        URL = [NSURL fileURLWithPath:savePath];
-    }
-    return URL;
+    return  [NSURL uexDownloader_saveURLFromPath:[self.euexObj absPath:self.info.savePath]];
+
 }
 
+static const NSTimeInterval kMinimumCallbackInteval = 0.05;
 
 - (void)onStatusCallback{
-    NSString *jsStr = [NSString stringWithFormat:@"if(uexDownloaderMgr.onStatus){uexDownloaderMgr.onStatus(%@,%@,%@,%@)}",self.identifier,@(self.info.totalBytesWritten),@(self.progress),@(self.status)];
-    [EUtility brwView:self.euexObj.meBrwView evaluateScript:jsStr];
+    static NSDate *lastCallbackTime = nil;
+    
+    
+    BOOL shouldCallback = YES;
+
+        NSDate *currentTime = [NSDate date];
+        if (self.info.status == uexDownloadInfoStatusDownloading && [currentTime timeIntervalSinceDate:lastCallbackTime] < kMinimumCallbackInteval && self.progress != 0 && self.progress != 1) {
+            //避免回调过于频繁占用资源
+           shouldCallback = NO;
+        }else{
+            lastCallbackTime = currentTime;
+        }
+    if (shouldCallback) {
+        static NSInteger count = 0;
+        count++;
+        [self.euexObj callbackWithFunction:@"onStatus" arguments:UEX_ARGS_PACK(self.identifier,@(self.info.fileSize),@(self.progress * 100),@(self.info.status))];
+    }
+
 }
 
 @end

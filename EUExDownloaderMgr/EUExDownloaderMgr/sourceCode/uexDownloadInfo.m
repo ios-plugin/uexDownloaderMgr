@@ -23,33 +23,45 @@
 
 #import "uexDownloadInfo.h"
 #import <CommonCrypto/CommonCrypto.h>
+
+
+@interface uexDownloadInfo()
+
+@end
+
+
 @implementation uexDownloadInfo
 
 - (instancetype)init{
-    return [self initWithDoanloadPath:nil savePath:nil headers:nil];
+    return [self initWithDownloadPath:nil savePath:nil headers:nil];
 }
 
-- (instancetype)initWithDoanloadPath:(NSString *)downloadPath savePath:(NSString *)savePath headers:(NSDictionary<NSString *,NSString *> *)headers{
+- (instancetype)initWithDownloadPath:(NSString *)downloadPath savePath:(NSString *)savePath headers:(NSDictionary<NSString *,NSString *> *)headers{
     self = [super init];
     if (self) {
         _downloadPath = downloadPath;
         _savePath = savePath;
         _headers = headers;
+        _status = uexDownloadInfoStatusSuspended;
         
     }
     return self;
 }
 
+
+
+
 + (instancetype)cachedInfoWithDownloadPath:(NSString *)downloadPath{
-    return [NSKeyedUnarchiver unarchiveObjectWithFile:[self cachedInfoWithDownloadPath:downloadPath]];
+    if(!downloadPath){
+        return nil;
+    }
+    return [NSKeyedUnarchiver unarchiveObjectWithFile:[self infoCacheSavePathWithDownloadPath:downloadPath]];
 }
-- (NSMutableURLRequest *)mutableRequest{
-    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[self downloadURL]];
-    [self.headers enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
-        [request addValue:obj forHTTPHeaderField:key];
-    }];
-    return request;
-}
+
+
+
+
+
 
 
 - (NSURL *)downloadURL{
@@ -61,27 +73,35 @@
 }
 
 - (NSURLRequest *)downloadRequest{
-    return [[self mutableRequest] copy];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[self downloadURL]];
+    [self.headers enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
+        [request addValue:obj forHTTPHeaderField:key];
+    }];
+    return [request copy];
 }
 
 
-- (NSDictionary *)infoDict{
+- (NSDictionary *)dictDescription{
     //@"fileSize",@"currentSize",@"savePath",@"lastTime"
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setValue:self.savePath forKey:@"savePath"];
     [dict setValue:@(self.bytesWritten) forKey:@"currentSize"];
-    [dict setValue:@(self.totalBytesWritten) forKey:@"fileSize"];
-    
+    [dict setValue:@(self.fileSize) forKey:@"fileSize"];
+    [dict setValue:self.downloadPath forKey:@"serverURL"];
     NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
     [dict setValue:[dateFormatter stringFromDate:self.lastOperationTime] forKey:@"lastTime"];
     [dict setValue:@(self.resumable) forKey:@"resumable"];
     [dict setValue:self.headers forKey:@"header"];
+    [dict setValue:@(self.status) forKey:@"status"];
     return [dict copy];
 }
 
+
+
 - (void)cacheForResuming{
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        self.lastOperationTime = [NSDate date];
         NSString *path = [self cacheSavePath];
         NSFileManager *fm = [NSFileManager defaultManager];
         if([fm fileExistsAtPath:path]){
@@ -89,8 +109,8 @@
         }
         NSData *data = [NSKeyedArchiver archivedDataWithRootObject:self];
         [data writeToFile:path atomically:YES];
+        
     });
-    
 }
 
 - (void)updataRequestInResumeCache{
@@ -104,13 +124,15 @@
         return;
     }
     
-    NSData *currentRequest = [resumeDict objectForKey:@"NSURLSessionResumeCurrentRequest"];
-    NSURLRequest *oldRequest = [(NSURLRequest *)[NSKeyedUnarchiver unarchiveObjectWithData:currentRequest] copy];
-    NSLog(@"Range : %@",[oldRequest valueForHTTPHeaderField:@"Range"]);
+    //旧的request
+    //NSData *oldRequestData = [resumeDict objectForKey:@"NSURLSessionResumeCurrentRequest"];
+    //NSURLRequest *oldRequest = [(NSURLRequest *)[NSKeyedUnarchiver unarchiveObjectWithData:oldRequestData] copy];
+
     
-    NSMutableURLRequest *request = [self mutableRequest];
+    NSMutableURLRequest *request = [[self downloadRequest] mutableCopy];
     [request addValue:[resumeDict objectForKey:@"NSURLSessionResumeEntityTag"] forHTTPHeaderField:@"If-Match"];
-    [request addValue:[NSString stringWithFormat:@"bytes=%@-", [resumeDict objectForKey:@"NSURLSessionResumeBytesReceived"]] forHTTPHeaderField:@"Range"];
+
+    //[request addValue:[NSString stringWithFormat:@"bytes=%@-", [resumeDict objectForKey:@"NSURLSessionResumeBytesReceived"]] forHTTPHeaderField:@"Range"];
 
     NSData *newRequestData = [NSKeyedArchiver archivedDataWithRootObject:[request copy]];
     [resumeDict setValue:newRequestData forKey:@"NSURLSessionResumeCurrentRequest"];
@@ -146,7 +168,7 @@
     dispatch_once(&onceToken, ^{
         //cache目录
         NSString *cachePath = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, YES).firstObject;
-        folderPath = [cachePath stringByAppendingPathComponent:@"uexDownloaderMgr"];
+        folderPath = [cachePath stringByAppendingPathComponent:[self cacheFolderSubpath]];
         BOOL isFolder = NO;
         NSFileManager *fm = [NSFileManager defaultManager];
         if(![fm fileExistsAtPath:folderPath isDirectory:&isFolder] || !isFolder){
@@ -157,17 +179,21 @@
     return folderPath;
 }
 
++ (NSString *)cacheFolderSubpath{
+    return @"uexDownloaderMgr/normalTask";
+}
+
 #pragma mark - NSSecureCoding
 
 static NSString *const kDownloadPathCodingKey = @"downloadPath";
 static NSString *const kSavePathCodingKey = @"savePath";
 static NSString *const kLastOperationTimeCodingKey = @"lastOperationTime";
 static NSString *const kBytesWrittenCodingKey = @"bytesWritten";
-static NSString *const kTotalBytesWrittenCodingKey = @"totalBytesWritten";
+static NSString *const kFileSizeCodingKey = @"fileSize";
 static NSString *const kHeadersCodingKey = @"headers";
 static NSString *const kResumeCacheCodingKey = @"resumeCache";
 static NSString *const kResumableCodingKey = @"resumable";
-
+static NSString *const kStatusCodingKey = @"status";
 
 + (BOOL)supportsSecureCoding{
     return YES;
@@ -178,48 +204,32 @@ static NSString *const kResumableCodingKey = @"resumable";
     [aCoder encodeObject:self.savePath forKey:kSavePathCodingKey];
     [aCoder encodeObject:self.lastOperationTime forKey:kLastOperationTimeCodingKey];
     [aCoder encodeObject:@(self.bytesWritten) forKey:kBytesWrittenCodingKey];
-    [aCoder encodeObject:@(self.totalBytesWritten) forKey:kTotalBytesWrittenCodingKey];
-    [aCoder encodeObject:self.resumeCache forKey:kResumeCacheCodingKey];
+    [aCoder encodeObject:@(self.fileSize) forKey:kFileSizeCodingKey];
+    if (self.status == uexDownloadInfoStatusSuspended) {
+        [aCoder encodeObject:self.resumeCache forKey:kResumeCacheCodingKey];
+    }
     [aCoder encodeObject:@(self.resumable) forKey:kResumableCodingKey];
+    [aCoder encodeObject:@(self.status) forKey:kStatusCodingKey];
+    [aCoder encodeObject:self.headers forKey:kHeadersCodingKey];
+
 }
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [self initWithDoanloadPath:nil savePath:nil headers:nil];
+    self = [self initWithDownloadPath:nil savePath:nil headers:nil];
     if (self) {
         _downloadPath = [aDecoder decodeObjectOfClass:[NSString class] forKey:kDownloadPathCodingKey];
         _savePath = [aDecoder decodeObjectOfClass:[NSString class] forKey:kSavePathCodingKey];
         _lastOperationTime = [aDecoder decodeObjectOfClass:[NSDate class] forKey:kLastOperationTimeCodingKey];
         _bytesWritten = [[aDecoder decodeObjectOfClass:[NSNumber class] forKey:kBytesWrittenCodingKey] longLongValue];
-        _totalBytesWritten = [[aDecoder decodeObjectOfClass:[NSNumber class] forKey:kTotalBytesWrittenCodingKey] longLongValue];
+        _fileSize = [[aDecoder decodeObjectOfClass:[NSNumber class] forKey:kFileSizeCodingKey] longLongValue];
         _resumeCache = [aDecoder decodeObjectOfClass:[NSData class] forKey:kResumeCacheCodingKey];
         _resumable = [[aDecoder decodeObjectOfClass:[NSNumber class] forKey:kResumableCodingKey] boolValue];
+        _status = (uexDownloadInfoStatus)[[aDecoder decodeObjectOfClass:[NSNumber class] forKey:kStatusCodingKey] integerValue];
+        _headers = [aDecoder decodeObjectOfClass:[NSDictionary class] forKey:kHeadersCodingKey];
     }
     return self;
 }
 @end
 
-@implementation NSString (uexDownloaderMgr)
 
-- (instancetype)uexDownloader_MD5{
-    const char *cStr = [self UTF8String];
-    unsigned char result[16];
-    CC_MD5(cStr, strlen(cStr), result); // This is the md5 call
-    return [NSString stringWithFormat:
-            @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
-            result[0], result[1], result[2], result[3],
-            result[4], result[5], result[6], result[7],
-            result[8], result[9], result[10], result[11],
-            result[12], result[13], result[14], result[15]
-            ];
-}
-@end
 
-@implementation NSDate(uexDownloaderMgr)
-
-- (NSString *)uexDownloader_timestamp{
-    unsigned long long time = [self timeIntervalSince1970] * 1000;
-    NSString * timestamp = [NSString stringWithFormat:@"%lld",time];
-    return timestamp;
-}
-
-@end

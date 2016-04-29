@@ -1,10 +1,10 @@
 /**
  *
- *	@file   	: uexDownloadSessionManager;.h  in EUExDownloaderMgr
+ *	@file   	: uexDownloadBackgroundTask.h  in EUExDownloaderMgr
  *
  *	@author 	: CeriNo 
  * 
- *	@date   	: Created on 16/4/16.
+ *	@date   	: Created on 16/4/18.
  *
  *	@copyright 	: 2016 The AppCan Open Source Project.
  *
@@ -23,10 +23,29 @@
 
 
 #import <Foundation/Foundation.h>
-#import <AFNetworking/AFNetworking.h>
-@interface uexDownloadSessionManager_ : NSObject
+#import "uexDownloadBackgroundTaskInfo.h"
+@class EBrowserView;
+@interface uexDownloadBackgroundTask : NSObject
 
 
-+ (instancetype)defaultManager;
+
+
+@property (nonatomic,strong)NSString *identifier;
+@property (nonatomic,weak)EBrowserView *webViewObserver;
+@property (nonatomic,strong,readonly) uexDownloadBackgroundTaskInfo *info;
+
+extern NSString * kEUExDownloaderBackgroundTaskPrefix;
+
++ (instancetype)taskWithIdentifier:(NSString *)identifier resumeFromCache:(BOOL)isResumeFromCache;
++ (instancetype)taskWithShortIdentifier:(NSString *)shortIdentifier resumeFromCache:(BOOL)isResumeFromCache;
+
+
+
+- (BOOL)canDownload;
+- (void)startDownload;
+- (void)cancelDownloadWithOption:(uexDownloaderCancelOption)option;
+
+
+
 
 @end

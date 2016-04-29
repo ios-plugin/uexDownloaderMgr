@@ -39,78 +39,23 @@
     
 }
 
+
+
+
+#pragma mark - Default Initializer
 - (void)defaultInitializer{
     //HTTPS
     if(theApp.useCertificateControl){
-        [self setupSSLPolicy];
+        //setupSSLPolicy
+        [self setSessionDidReceiveAuthenticationChallengeBlock:^NSURLSessionAuthChallengeDisposition(NSURLSession * _Nonnull session, NSURLAuthenticationChallenge * _Nonnull challenge, NSURLCredential *__autoreleasing  _Nullable * _Nullable credential) {
+            return [uexDownloadHelper authChallengeDispositionWithSession:session challenge:challenge credential:credential];
+        }];
     }else{
         AFSecurityPolicy *policy = [AFSecurityPolicy defaultPolicy];
         policy.allowInvalidCertificates = YES;
     }
 }
 
-- (void)setupSSLPolicy{
-    @weakify(self);
-    [self setSessionDidReceiveAuthenticationChallengeBlock:^NSURLSessionAuthChallengeDisposition(NSURLSession * _Nonnull session, NSURLAuthenticationChallenge * _Nonnull challenge, NSURLCredential *__autoreleasing  _Nullable * _Nullable credential) {
-        @strongify(self);
-        if(challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust) {
-            //服务器认证
-            /* 可以在这里添加服务器域名验证
-            NSArray *trustHosts = @[@"www.baidu.com"];
-            if (![trustHosts containsObject:challenge.protectionSpace.host]) {
-                return NSURLSessionAuthChallengeCancelAuthenticationChallenge;
-            }
-             */
-            //目前没有提供服务器的SSL证书认证功能,直接信任
-            *credential = [NSURLCredential credentialForTrust:challenge.protectionSpace.serverTrust];
-            return NSURLSessionAuthChallengeUseCredential;
-        }
-        
-        if(challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodClientCertificate){
-            //客户端认证
-            SecIdentityRef identity=NULL;
 
-            NSData *PKCS12Data=[NSData dataWithContentsOfFile:[BUtility clientCertficatePath]];
-            if (![self extractPKCS12Data:PKCS12Data toIdentity:&identity]) {
-                return NSURLSessionAuthChallengeCancelAuthenticationChallenge;
-            }
-            SecCertificateRef certificate = NULL;
-            SecIdentityCopyCertificate (identity, &certificate);
-            const void *certs[] = {certificate};
-            CFArrayRef certArray = CFArrayCreate(kCFAllocatorDefault, certs, 1, NULL);
-            *credential = [NSURLCredential credentialWithIdentity:identity certificates:(__bridge NSArray*)certArray persistence:NSURLCredentialPersistencePermanent];
-            return NSURLSessionAuthChallengeUseCredential;
-        }
-        
-        return NSURLSessionAuthChallengePerformDefaultHandling;
-    }];
-}
-
-- (OSStatus)extractPKCS12Data:(NSData *)PKCS12Data toIdentity:(SecIdentityRef *)identity {
-    if (!PKCS12Data || PKCS12Data.length == 0) {
-        return errSecSuccess;
-    }
-    OSStatus result = errSecSuccess;
-    CFDataRef inPKCS12Data = (CFDataRef)CFBridgingRetain(PKCS12Data);
-    CFStringRef password = (__bridge CFStringRef)theApp.useCertificatePassWord;
-    const void *keys[] = {kSecImportExportPassphrase};
-    const void *values[] = {password};
-    CFDictionaryRef options = CFDictionaryCreate(NULL, keys, values, 1, NULL, NULL);
-    CFArrayRef items = CFArrayCreate(NULL, 0, 0, NULL);
-    result = SecPKCS12Import(inPKCS12Data, options, &items);
-    if (result == 0) {
-        CFDictionaryRef ident = CFArrayGetValueAtIndex(items,0);
-        const void *tempIdentity = NULL;
-        tempIdentity = CFDictionaryGetValue(ident, kSecImportItemIdentity);
-        *identity = (SecIdentityRef)tempIdentity;
-    }
-    if(inPKCS12Data){
-        CFRelease(inPKCS12Data);
-    }
-    if (options) {
-        CFRelease(options);
-    }
-    return result;
-}
 
 @end
