@@ -1,23 +1,42 @@
-//
-//  EUExDownloaderMgr.h
-//  webKitCorePalm
-//
-//  Created by AppCan on 11-11-1.
-//  Copyright 2011 AppCan. All rights reserved.
-//
+/**
+ *
+ *	@file   	: EUExDownloaderMgr.h  in EUExDownloaderMgr
+ *
+ *	@author 	: CeriNo 
+ * 
+ *	@date   	: Created on 16/4/15.
+ *
+ *	@copyright 	: 2016 The AppCan Open Source Project.
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as published by
+ *  the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ */
+
 
 #import <Foundation/Foundation.h>
 #import "EUExBase.h"
 
-#define UEX_DOWNLOAD_DOWNLOADING	0
-#define UEX_DOWNLOAD_FINISH			1
-#define UEX_DOWNLOAD_FAIL			2
+#define UEX_FALSE @(NO)
+#define UEX_TRUE @(YES)
 
-@interface EUExDownloaderMgr:EUExBase{
-	NSMutableDictionary *downObjDict;
-}
+#define UEX_ARGS_PACK(...) UEX_ARGS_PACK_(__VA_ARGS__)
+#define UEX_ARGS_PACK_(...) (@[metamacro_foreach(UEX_OBJECT_OR_NSNULL,,__VA_ARGS__ )])
+#define UEX_OBJECT_OR_NSNULL(index,obj) (obj) ? : NSNull.null,
 
-@property(nonatomic,retain)NSMutableDictionary *downObjDict;
-@property(nonatomic,retain) NSMutableDictionary *headerDict;
--(void)uexSuccessWithOpId:(int)inOpId fileSize:(int)inFileSize percent:(int)inPercent status:(int)inStatus;
+#define UEX_STRING_VALUE_OR_NIL(obj) ([obj isKindOfClass:[NSString class]] ? obj : nil)
+
+@interface EUExDownloaderMgr : EUExBase
+
+- (void)callbackWithFunction:(NSString *)funcName arguments:(NSArray *)args;
+
+
 @end

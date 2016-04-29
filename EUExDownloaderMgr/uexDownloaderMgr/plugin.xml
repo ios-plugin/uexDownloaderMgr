@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <uexplugins>
     <plugin name="uexDownloaderMgr">
-        <method name="createDownloader"></method>
-		<method name="download"></method>
-        <method name="closeDownloader"></method>
-        <method name="getInfo"></method>
-        <method name="clearTask"></method>
-        <method name="setHeaders"></method>
-        <method name="cancelDownload"></method>
-	</plugin>
+        <method name="createDownloader" sync="true"></method>
+        <method name="download"></method>
+        <method name="closeDownloader" sync="true"></method>
+        <method name="getInfo" sync="true"></method>
+        <method name="clearTask" sync="true"></method>
+        <method name="setHeaders" sync="true"></method>
+        <method name="cancelDownload" sync="true"></method>
+        <method name="createBackgroundTask" sync="true"></method>
+        <method name="cancelBackgroundTask" sync="true"></method>
+        <method name="observeBackgroundTask" sync="true"></method>
+        <method name="startBackgroundTask" sync="true"></method>
+        <method name="getBackgroundTaskInfo" sync="true"></method>
+        <method name="clearCache"></method>
+        <method name="setDebugMode"></method>
+    </plugin>
 </uexplugins>

@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <uexplugins>
     <plugin
-        uexName="uexDownloaderMgr" version="3.0.14" build="14">
-        <info>14:修复在复用窗口中使用时回调丢失的bug</info>
+        uexName="uexDownloaderMgr" version="3.3.15" build="15">
+        <info>15:用AFNetworking重构;添加后台下载的相关接口</info>
+        <build>14:修复在复用窗口中使用时回调丢失的bug</build>
+
         <build>13:添加IDE支持</build>
         <build>12:修改了下载时进度条不动的BUG</build>
         <build>11:修改请求的变量</build>

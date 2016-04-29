@@ -17,7 +17,14 @@
  */
 
 //开发版本 控制
+//#define F_DEVELOPMENT_USE   NO
+
+#ifdef WIDGETONE_FOR_IDE_DEBUG
+#define F_DEVELOPMENT_USE   YES
+#else
 #define F_DEVELOPMENT_USE   NO
+#endif
+
 //view跳转 控制
 #define F_APPCANREPORT_USE     YES
 //自定义事件 控制
@@ -55,6 +62,7 @@
 
 #define F_UD_StandardWgt          @"standWgt"
 #define F_UD_UpdateWgtID        @"AppCanWgtID"
+#define F_UD_WgtCopyFinish       @"AppCanWgtCopyFinish"
 
 //clientCertificate.p12
 //#define ClientCertficate_PATH [NSString stringWithFormat:@"%@/Documents/widget/wgtRes/clientCertificate.p12", NSHomeDirectory()]
@@ -117,7 +125,8 @@ typedef union _BGColor {
 
 }
 //base js
-+(NSString*)getBaseJSKey;
+
+//+(NSString*)getBaseJSKey;
 //rc4 js
 +(NSString*)getRC4LocalStoreJSKey;
 //doc path
@@ -171,8 +180,9 @@ typedef union _BGColor {
 +(NSString*)appKey;
 +(NSString*)appId;
 +(NSString *)getSubWidgetAppKeyByAppid:(NSString*)appid;
-+(void)setAppCanViewBackground:(int)wgtType name:(NSString*)inName closeReason:(int)inOpenReason;
-+(void)setAppCanViewActive:(int)wgtType opener:(NSString*)inOpener name:(NSString*)inName openReason:(int)inOpenReason mainWin:(int)inMainWnd;
++ (void)setAppCanViewActive:(int)wgtType opener:(NSString *)inOpener name:(NSString *)inName openReason:(int)inOpenReason mainWin:(int)inMainWnd appInfo:(NSDictionary *)appInfo;
+
++ (void)setAppCanViewBackground:(int)wgtType name:(NSString *)inName closeReason:(int)inOpenReason appInfo:(NSDictionary *)appInfo;
 //mac
 +(NSString *)macAddress;
 //absPath
@@ -199,4 +209,14 @@ typedef union _BGColor {
 +(NSDictionary *)getMainWidgetConfigWindowBackground;
 +(NSString *)getMainWidgetConfigLogserverip;
 + (BOOL)copyMissingFile:(NSString *)sourcePath toPath:(NSString *)toPath;
++ (NSString *)bundleIdentifier;
+
++ (NSString *)getVarifyAppMd5Code:(NSString *)appId AppKey:(NSString *)appKey time:(NSTimeInterval)time_;
+
+
++ (void)rotateToOrientation:(UIInterfaceOrientation)orientation;
+#pragma mark - IDE
+
++ (NSString *)dynamicPluginFrameworkFolderPath;
+
 @end
