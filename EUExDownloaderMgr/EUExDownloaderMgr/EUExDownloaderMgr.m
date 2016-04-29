@@ -459,12 +459,14 @@ static NSString *const kPluginName = @"uexDownloaderMgr";
     if (!args || count == 0) {
         return [NSString stringWithFormat:@"if(%@.%@){%@.%@();}",kPluginName,funcName,kPluginName,funcName];
     }
+
     NSMutableString *argsFormat = [trans(args[0]) mutableCopy];
     for (NSInteger i = 1; i < count; i++) {
         [argsFormat appendString:@","];
         [argsFormat appendString:trans(args[i])];
     }
     return [NSString stringWithFormat:@"if(%@.%@){%@.%@(%@);}",kPluginName,funcName,kPluginName,funcName,argsFormat];
+
 }
 
 @end
