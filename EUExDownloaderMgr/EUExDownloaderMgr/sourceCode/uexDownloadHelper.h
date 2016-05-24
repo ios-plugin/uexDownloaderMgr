@@ -36,10 +36,7 @@
 #define UEXLog(...) uexDownloadLog(__VA_ARGS__);
 
 
-typedef NS_OPTIONS(NSInteger, uexDownloaderCancelOption){
-    uexDownloaderCancelOptionDefault = 0,
-    uexDownloaderCancelOptionClearCache = 1 << 0,
-};
+
 
 
 
@@ -53,8 +50,7 @@ void uexDownloadLog(NSString *format,...);
 + (WWidget *)mainWidget;
 + (NSDictionary<NSString *,NSString *> *)AppCanHTTPHeadersWithEUExObj:(EUExDownloaderMgr *)euexObj;
 
-+ (NSURLSessionAuthChallengeDisposition)authChallengeDispositionWithSession:(NSURLSession *)session
-                                                                  challenge:(NSURLAuthenticationChallenge *)challenge
++ (NSURLSessionAuthChallengeDisposition)authChallengeDispositionWithChallenge:(NSURLAuthenticationChallenge *)challenge
                                                                  credential:(NSURLCredential *__autoreleasing *)credential;
 
 @end

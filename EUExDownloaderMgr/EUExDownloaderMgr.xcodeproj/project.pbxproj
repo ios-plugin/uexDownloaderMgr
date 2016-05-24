@@ -12,11 +12,6 @@
 		4275DCDD1CC4BD0100C67777 /* uexDownloadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4275DCDC1CC4BD0100C67777 /* uexDownloadHelper.m */; };
 		4287EC0E1CC0793400EBD876 /* EUExDownloaderMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 4287EC0D1CC0793400EBD876 /* EUExDownloaderMgr.m */; };
 		4287EC141CC098EB00EBD876 /* uexDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4287EC131CC098EB00EBD876 /* uexDownloader.m */; };
-		4287EC171CC0C10B00EBD876 /* uexDownloadInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 4287EC161CC0C10B00EBD876 /* uexDownloadInfo.m */; };
-		4287EC5A1CC20B0500EBD876 /* uexDownloadSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4287EC591CC20B0500EBD876 /* uexDownloadSessionManager.m */; };
-		42AB0DD01CC4DB48002BD5F0 /* uexDownloadBackgroundTaskInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AB0DCF1CC4DB48002BD5F0 /* uexDownloadBackgroundTaskInfo.m */; };
-		42AB0DD31CC4DED4002BD5F0 /* uexDownloadBackgroundTaskManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AB0DD21CC4DED4002BD5F0 /* uexDownloadBackgroundTaskManager.m */; };
-		42AB0DD61CC4DEE7002BD5F0 /* uexDownloadBackgroundTask.m in Sources */ = {isa = PBXBuildFile; fileRef = 42AB0DD51CC4DEE7002BD5F0 /* uexDownloadBackgroundTask.m */; };
 		5A9FF2511890B0A400E16C52 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A9FF2501890B0A400E16C52 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -34,6 +29,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		420B879B1CF41B5300726C9B /* ACEArgsPacking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEArgsPacking.h; sourceTree = "<group>"; };
+		420B879C1CF41B5300726C9B /* ACEAvailable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEAvailable.h; sourceTree = "<group>"; };
+		420B879D1CF41B5300726C9B /* ACEEXTScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEEXTScope.h; sourceTree = "<group>"; };
+		420B879E1CF41B5300726C9B /* ACEMetamacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEMetamacros.h; sourceTree = "<group>"; };
+		420B879F1CF41B5300726C9B /* ACEUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEUtils.h; sourceTree = "<group>"; };
 		423656491CD361C90070CD3E /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AFNetworking.framework; sourceTree = "<group>"; };
 		4242C7EC1CD3549C00A5A845 /* BUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BUtility.h; sourceTree = "<group>"; };
 		4275DCDB1CC4BD0100C67777 /* uexDownloadHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uexDownloadHelper.h; sourceTree = "<group>"; };
@@ -42,18 +42,8 @@
 		4287EC0D1CC0793400EBD876 /* EUExDownloaderMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EUExDownloaderMgr.m; sourceTree = "<group>"; };
 		4287EC121CC098EB00EBD876 /* uexDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uexDownloader.h; sourceTree = "<group>"; };
 		4287EC131CC098EB00EBD876 /* uexDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = uexDownloader.m; sourceTree = "<group>"; };
-		4287EC151CC0C10B00EBD876 /* uexDownloadInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uexDownloadInfo.h; sourceTree = "<group>"; };
-		4287EC161CC0C10B00EBD876 /* uexDownloadInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = uexDownloadInfo.m; sourceTree = "<group>"; };
-		4287EC581CC20B0500EBD876 /* uexDownloadSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uexDownloadSessionManager.h; sourceTree = "<group>"; };
-		4287EC591CC20B0500EBD876 /* uexDownloadSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = uexDownloadSessionManager.m; sourceTree = "<group>"; };
 		4287EC5C1CC2179100EBD876 /* EXTScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EXTScope.h; sourceTree = "<group>"; };
 		4287EC5E1CC2179100EBD876 /* metamacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = metamacros.h; sourceTree = "<group>"; };
-		42AB0DCE1CC4DB48002BD5F0 /* uexDownloadBackgroundTaskInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uexDownloadBackgroundTaskInfo.h; sourceTree = "<group>"; };
-		42AB0DCF1CC4DB48002BD5F0 /* uexDownloadBackgroundTaskInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = uexDownloadBackgroundTaskInfo.m; sourceTree = "<group>"; };
-		42AB0DD11CC4DED4002BD5F0 /* uexDownloadBackgroundTaskManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uexDownloadBackgroundTaskManager.h; sourceTree = "<group>"; };
-		42AB0DD21CC4DED4002BD5F0 /* uexDownloadBackgroundTaskManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = uexDownloadBackgroundTaskManager.m; sourceTree = "<group>"; };
-		42AB0DD41CC4DEE7002BD5F0 /* uexDownloadBackgroundTask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uexDownloadBackgroundTask.h; sourceTree = "<group>"; };
-		42AB0DD51CC4DEE7002BD5F0 /* uexDownloadBackgroundTask.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = uexDownloadBackgroundTask.m; sourceTree = "<group>"; };
 		5A9FF24D1890B0A400E16C52 /* libuexDownloaderMgr.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libuexDownloaderMgr.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A9FF2501890B0A400E16C52 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5A9FF2541890B0A400E16C52 /* EUExDownloaderMgr-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EUExDownloaderMgr-Prefix.pch"; sourceTree = "<group>"; };
@@ -86,17 +76,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		42AB0DFA1CC60171002BD5F0 /* backgroundTask */ = {
+		420B879A1CF41B5300726C9B /* ACEUtils */ = {
 			isa = PBXGroup;
 			children = (
-				42AB0DCE1CC4DB48002BD5F0 /* uexDownloadBackgroundTaskInfo.h */,
-				42AB0DCF1CC4DB48002BD5F0 /* uexDownloadBackgroundTaskInfo.m */,
-				42AB0DD11CC4DED4002BD5F0 /* uexDownloadBackgroundTaskManager.h */,
-				42AB0DD21CC4DED4002BD5F0 /* uexDownloadBackgroundTaskManager.m */,
-				42AB0DD41CC4DEE7002BD5F0 /* uexDownloadBackgroundTask.h */,
-				42AB0DD51CC4DEE7002BD5F0 /* uexDownloadBackgroundTask.m */,
+				420B879B1CF41B5300726C9B /* ACEArgsPacking.h */,
+				420B879C1CF41B5300726C9B /* ACEAvailable.h */,
+				420B879D1CF41B5300726C9B /* ACEEXTScope.h */,
+				420B879E1CF41B5300726C9B /* ACEMetamacros.h */,
+				420B879F1CF41B5300726C9B /* ACEUtils.h */,
 			);
-			name = backgroundTask;
+			path = ACEUtils;
 			sourceTree = "<group>";
 		};
 		5A9FF2441890B0A400E16C52 = {
@@ -127,6 +116,7 @@
 		5A9FF2521890B0A400E16C52 /* EUExDownloaderMgr */ = {
 			isa = PBXGroup;
 			children = (
+				420B879A1CF41B5300726C9B /* ACEUtils */,
 				5A9FF2761890B13300E16C52 /* engineHeader */,
 				5A9FF27A1890B13300E16C52 /* sourceCode */,
 				5A9FF2531890B0A400E16C52 /* Supporting Files */,
@@ -165,14 +155,9 @@
 			isa = PBXGroup;
 			children = (
 				423656491CD361C90070CD3E /* AFNetworking.framework */,
-				42AB0DFA1CC60171002BD5F0 /* backgroundTask */,
 				5A9FF28B1890B13300E16C52 /* JSON */,
 				4287EC121CC098EB00EBD876 /* uexDownloader.h */,
 				4287EC131CC098EB00EBD876 /* uexDownloader.m */,
-				4287EC151CC0C10B00EBD876 /* uexDownloadInfo.h */,
-				4287EC161CC0C10B00EBD876 /* uexDownloadInfo.m */,
-				4287EC581CC20B0500EBD876 /* uexDownloadSessionManager.h */,
-				4287EC591CC20B0500EBD876 /* uexDownloadSessionManager.m */,
 				4275DCDB1CC4BD0100C67777 /* uexDownloadHelper.h */,
 				4275DCDC1CC4BD0100C67777 /* uexDownloadHelper.m */,
 			);
@@ -245,12 +230,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4287EC0E1CC0793400EBD876 /* EUExDownloaderMgr.m in Sources */,
-				4287EC171CC0C10B00EBD876 /* uexDownloadInfo.m in Sources */,
 				4275DCDD1CC4BD0100C67777 /* uexDownloadHelper.m in Sources */,
-				42AB0DD61CC4DEE7002BD5F0 /* uexDownloadBackgroundTask.m in Sources */,
-				42AB0DD01CC4DB48002BD5F0 /* uexDownloadBackgroundTaskInfo.m in Sources */,
-				42AB0DD31CC4DED4002BD5F0 /* uexDownloadBackgroundTaskManager.m in Sources */,
-				4287EC5A1CC20B0500EBD876 /* uexDownloadSessionManager.m in Sources */,
 				4287EC141CC098EB00EBD876 /* uexDownloader.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

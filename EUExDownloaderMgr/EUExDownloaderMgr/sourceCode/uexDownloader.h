@@ -23,29 +23,54 @@
 
 
 #import <Foundation/Foundation.h>
+#import <AFNetworking/AFNetworking.h>
+@class uexDownloader;
+@protocol uexDownloaderDelegate <NSObject>
 
 
-
-
-@class EUExDownloaderMgr;
-@class uexDownloadInfo;
-
-
-
-
-@interface uexDownloader : NSObject
-@property (nonatomic,strong)uexDownloadInfo *info;
-@property (nonatomic,strong)NSNumber *identifier;
-@property (nonatomic,weak)EUExDownloaderMgr* euexObj;
-@property (nonatomic,strong)NSDictionary<NSString *,NSString *> *headers;
-
-- (instancetype)initWithIdentifier:(NSInteger)identifier euexObj:(EUExDownloaderMgr *)euexObj;
-- (void)getPreparedWithDownloadInfo:(uexDownloadInfo *)info;
-- (void)startDownload;
-
-
-- (void)cancelDownloadWithOption:(uexDownloaderCancelOption)option;
-
-- (void)clean;
-
+- (void)uexDownloader:(__kindof uexDownloader *)downloader taskDidCompletedWithError:(NSError *)error;
+- (void)uexDownloader:(__kindof uexDownloader *)downloader sessionDidInvalidatedWithError:(NSError *)error;
+- (void)uexDownloaderDidFinishHandlingBackgroundSessionEvents:(__kindof uexDownloader *)downloader;
 @end
+
+
+
+typedef NS_OPTIONS(NSInteger, uexDownloaderCancelOption){
+    uexDownloaderCancelOptionDefault = 0,
+    uexDownloaderCancelOptionClearCache = 1 << 0,
+};
+typedef NS_ENUM(NSInteger,uexDownloaderStatus){
+    uexDownloaderStatusDownloading = 0,
+    uexDownloaderStatusCompleted,
+    uexDownloaderStatusFailed,
+};
+
+
+
+@class EUExDownloaderMgr,EBrowserView;
+@interface uexDownloader : NSObject
+
+@property (nonatomic,strong)NSString *identifier;
+@property (nonatomic,strong)NSString *serverPath;
+@property (nonatomic,strong)NSString *savePath;
+@property (nonatomic,weak)EUExDownloaderMgr* euexObj;
+@property (nonatomic,weak)EBrowserView *observer;
+@property (nonatomic,strong)NSDictionary<NSString *,NSString *> *headers;
+@property (nonatomic,assign)BOOL isGlobalDownloader;
+@property (nonatomic,assign,getter=isResumable)BOOL resumable;
+@property (nonatomic,assign)uexDownloaderStatus status;
+
+
+
+
+
+- (instancetype)initWithIdentifier:(NSString *)identifier euexObj:(EUExDownloaderMgr *)euexObj;
+- (instancetype)initFromCacheWithServerPath:(NSString *)serverPath;
+- (void)startDownload;
+- (void)cancelDownloadWithOption:(uexDownloaderCancelOption)option;
+- (void)clean;
+- (NSDictionary *)info;
+@end
+
+
+

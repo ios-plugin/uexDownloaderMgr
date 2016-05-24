@@ -24,19 +24,18 @@
 
 #import <Foundation/Foundation.h>
 #import "EUExBase.h"
+#import "uexDownloader.h"
 
-#define UEX_FALSE @(NO)
-#define UEX_TRUE @(YES)
 
-#define UEX_ARGS_PACK(...) UEX_ARGS_PACK_(__VA_ARGS__)
-#define UEX_ARGS_PACK_(...) (@[metamacro_foreach(UEX_OBJECT_OR_NSNULL,,__VA_ARGS__ )])
-#define UEX_OBJECT_OR_NSNULL(index,obj) (obj) ? : NSNull.null,
 
-#define UEX_STRING_VALUE_OR_NIL(obj) ([obj isKindOfClass:[NSString class]] ? obj : nil)
 
-@interface EUExDownloaderMgr : EUExBase
 
-- (void)callbackWithFunction:(NSString *)funcName arguments:(NSArray *)args;
+
+@protocol uexDownloaderDelegate;
+
+@interface EUExDownloaderMgr : EUExBase<uexDownloaderDelegate>
+
+
 
 
 @end

@@ -87,7 +87,7 @@ void uexDownloadLog(NSString *format,...){
     return [dict copy];
 }
 
-+ (NSURLSessionAuthChallengeDisposition)authChallengeDispositionWithSession:(NSURLSession *)session challenge:(NSURLAuthenticationChallenge *)challenge credential:(NSURLCredential *__autoreleasing *)credential{
++ (NSURLSessionAuthChallengeDisposition)authChallengeDispositionWithChallenge:(NSURLAuthenticationChallenge *)challenge credential:(NSURLCredential *__autoreleasing *)credential{
     if(challenge.protectionSpace.authenticationMethod == NSURLAuthenticationMethodServerTrust) {
         //服务器认证
         /* 可以在这里添加服务器域名验证
