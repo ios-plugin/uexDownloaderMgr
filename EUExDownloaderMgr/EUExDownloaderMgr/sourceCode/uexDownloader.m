@@ -90,6 +90,7 @@
     }
     if (option & uexDownloaderCancelOptionClearCache) {
         [self.task cancel];
+        self.resumeCache = nil;
     }else{
         dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
             Lock();
@@ -141,7 +142,6 @@
     };
     void (^handleCompletionBlock)(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) = nil;
     if (self.resumable && self.resumeCache) {
-        [self updateCachedRequestHeader];
         self.task = [self.sessionManager downloadTaskWithResumeData:self.resumeCache
                                                            progress:handleProgressBlock
                                                         destination:handleDestinationBlock
@@ -172,6 +172,13 @@
     if (error || !resumeDict) {
         return;
     }
+    NSString *tmpFilePath = [NSTemporaryDirectory() stringByAppendingPathComponent:resumeDict[@"NSURLSessionResumeInfoTempFileName"]];
+    if (![[NSFileManager defaultManager] fileExistsAtPath:tmpFilePath]) {
+        self.resumeCache = nil;
+        return;
+    }
+    
+    
     NSURLRequest *request = [self downloadRequest];
     NSData *newRequestData = [NSKeyedArchiver archivedDataWithRootObject:[request copy]];
     [resumeDict setValue:newRequestData forKey:@"NSURLSessionResumeCurrentRequest"];
@@ -235,9 +242,13 @@
 - (void)prepareToDownload{
     //resume cache
     uexDownloader *oldDownloader = [[uexDownloader alloc]initFromCacheWithServerPath:self.serverPath];
-    if (oldDownloader) {
+    if (oldDownloader && self.resumable) {
         self.resumeCache = oldDownloader.resumeCache;
+        [self updateCachedRequestHeader];
     }
+
+    
+    
     
     //add appcan header;
     NSMutableDictionary *headers = [self.headers?:@{} mutableCopy];
@@ -350,7 +361,7 @@ static const NSTimeInterval kMinimumSaveInteval = 5;
     UEXEncodeNumberProperty(resumable);
     UEXEncodeNumberProperty(status);
     UEXEncodeNumberProperty(isGlobalDownloader);
-    if (self.status == uexDownloaderStatusFailed) {
+    if (self.status == uexDownloaderStatusFailed && self.resumable) {
         UEXEncodeObjectProperty(resumeCache);
     }
 }
