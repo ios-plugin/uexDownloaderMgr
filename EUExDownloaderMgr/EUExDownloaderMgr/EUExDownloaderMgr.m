@@ -66,7 +66,7 @@
                         arguments:ACE_ArgsPack(identifier,@2,result)
                        completion:nil];
         }else{
-            NSString *jsStr = [NSString stringWithFormat:@"if(uexDownloaderMgr.cbCreateDownloader){uexDownloaderMgr.cbCreateDownloader(%@,%@,%@);",identifier.JSONFragment,@2,result];
+            NSString *jsStr = [NSString stringWithFormat:@"if(uexDownloaderMgr.cbCreateDownloader){uexDownloaderMgr.cbCreateDownloader(%@,%@,%@);}",identifier.JSONFragment,@2,result];
             [EUtility brwView:self.meBrwView evaluateScript:jsStr];
         }
     };
@@ -157,7 +157,7 @@
                         arguments:ACE_ArgsPack(identifier,@1,info.JSONFragment)
                        completion:nil];
         }else{
-            NSString *jsStr = [NSString stringWithFormat:@"if(uexDownloaderMgr.cbGetInfo){uexDownloaderMgr.cbGetInfo(%@,%@,%@);",identifier.JSONFragment,@1,info.JSONFragment.JSONFragment];
+            NSString *jsStr = [NSString stringWithFormat:@"if(uexDownloaderMgr.cbGetInfo){uexDownloaderMgr.cbGetInfo(%@,%@,%@)};",identifier.JSONFragment,@1,info.JSONFragment.JSONFragment];
             [EUtility brwView:self.meBrwView evaluateScript:jsStr];
         }
     };
