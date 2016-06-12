@@ -54,11 +54,12 @@ typedef NS_ENUM(NSInteger,uexDownloaderStatus){
 @property (nonatomic,strong)NSString *serverPath;
 @property (nonatomic,strong)NSString *savePath;
 @property (nonatomic,weak)EUExDownloaderMgr* euexObj;
-@property (nonatomic,weak)EBrowserView *observer;
+@property (nonatomic,weak)id<AppCanWebViewEngineObject> observer;
 @property (nonatomic,strong)NSDictionary<NSString *,NSString *> *headers;
 @property (nonatomic,assign)BOOL isGlobalDownloader;
 @property (nonatomic,assign,getter=isResumable)BOOL resumable;
 @property (nonatomic,assign)uexDownloaderStatus status;
+@property (nonatomic,strong)ACJSFunctionRef *cbFunc;
 
 
 

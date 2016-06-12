@@ -47,7 +47,7 @@ void uexDownloadLog(NSString *format,...);
 
 + (void)setDebugMode:(BOOL)mode;
 
-+ (WWidget *)mainWidget;
+
 + (NSDictionary<NSString *,NSString *> *)AppCanHTTPHeadersWithEUExObj:(EUExDownloaderMgr *)euexObj;
 
 + (NSURLSessionAuthChallengeDisposition)authChallengeDispositionWithChallenge:(NSURLAuthenticationChallenge *)challenge

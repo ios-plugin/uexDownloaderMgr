@@ -5,15 +5,8 @@
         <method name="download"></method>
         <method name="closeDownloader" sync="true"></method>
         <method name="getInfo" sync="true"></method>
-        <method name="clearTask" sync="true"></method>
-        <method name="setHeaders" sync="true"></method>
+        <method name="setHeaders"></method>
         <method name="cancelDownload" sync="true"></method>
-        <method name="createBackgroundTask" sync="true"></method>
-        <method name="cancelBackgroundTask" sync="true"></method>
-        <method name="observeBackgroundTask" sync="true"></method>
-        <method name="startBackgroundTask" sync="true"></method>
-        <method name="getBackgroundTaskInfo" sync="true"></method>
-        <method name="clearCache"></method>
         <method name="setDebugMode"></method>
     </plugin>
 </uexplugins>
