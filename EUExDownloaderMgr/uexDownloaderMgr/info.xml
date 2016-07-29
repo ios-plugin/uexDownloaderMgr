@@ -1,23 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <uexplugins>
     <plugin
-        uexName="uexDownloaderMgr" version="4.0.0" build="16">
-        <info>16:支持4.0引擎</info>
-        <build>15:用AFNetworking重构</build>
-        <build>14:修复在复用窗口中使用时回调丢失的bug</build>
-        <build>13:添加IDE支持</build>
-        <build>12:修改了下载时进度条不动的BUG</build>
-        <build>11:修改请求的变量</build>
-        <build>10:修改clean方法</build>
-        <build>9:验证的请求头的中的appid与key不匹配</build>
-        <build>8:判断当前的验证的请求头的属于的应用</build>
-        <build>7:Xcode7修正</build>
-        <build>6:setAppVerify新增加appId的信息</build>
-        <build>5:修改请求头的验证方法</build>
-        <build>4:支持https,导入证书。</build>
-        <build>3:支持https</build>
-        <build>2:为和文档保持统一增加uexDownloaderMgr.cancelDownload接口</build>
-        <build>1:新增setHeaders接口</build>
-        <build>0:下载管理功能插件</build>
+        uexName="uexDownloaderMgr" version="4.0.0" build="0">
+        <info>0:下载管理功能插件</info>
     </plugin>
 </uexplugins>

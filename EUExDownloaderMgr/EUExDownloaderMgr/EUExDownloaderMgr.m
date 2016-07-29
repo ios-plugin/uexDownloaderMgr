@@ -55,6 +55,22 @@
     [self clean];
 }
 #pragma mark - API
+
+- (NSString *)create:(NSMutableArray *)inArguments{
+    ACArgsUnpack(NSDictionary *info) = inArguments;
+    NSString *identifier = stringArg(info[@"id"]) ?: [NSUUID UUID].UUIDString;
+    if (!identifier || identifier.length == 0 || [self.downloaders.allKeys containsObject:identifier]) {
+        return nil;
+    }
+    uexDownloader *downloader = [[uexDownloader alloc]initWithIdentifier:identifier euexObj:self];
+    if (!downloader) {
+        return nil;
+    }
+    [self.downloaders setObject:downloader forKey:identifier];
+    return identifier;
+}
+
+
 - (NSNumber *)createDownloader:(NSMutableArray *)inArguments{
     __block NSNumber *result = UEX_FALSE;
     ACArgsUnpack(NSString *identifier) = inArguments;
