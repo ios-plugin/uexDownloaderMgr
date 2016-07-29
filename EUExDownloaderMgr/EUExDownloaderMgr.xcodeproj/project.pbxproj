@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		42338CB51D4B34C80036F93E /* AppCanKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42338CB41D4B34C80036F93E /* AppCanKit.framework */; };
 		4236564A1CD361C90070CD3E /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 423656491CD361C90070CD3E /* AFNetworking.framework */; };
 		4236564B1CD361D10070CD3E /* AFNetworking.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 423656491CD361C90070CD3E /* AFNetworking.framework */; };
 		4275DCDD1CC4BD0100C67777 /* uexDownloadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4275DCDC1CC4BD0100C67777 /* uexDownloadHelper.m */; };
 		4287EC0E1CC0793400EBD876 /* EUExDownloaderMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 4287EC0D1CC0793400EBD876 /* EUExDownloaderMgr.m */; };
 		4287EC141CC098EB00EBD876 /* uexDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4287EC131CC098EB00EBD876 /* uexDownloader.m */; };
-		42CCE7D11D050CF5004CA10F /* AppCanKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42CCE7D01D050CF5004CA10F /* AppCanKit.framework */; };
 		5A9FF2511890B0A400E16C52 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A9FF2501890B0A400E16C52 /* Foundation.framework */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +30,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		42338CB41D4B34C80036F93E /* AppCanKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AppCanKit.framework; sourceTree = "<group>"; };
 		423656491CD361C90070CD3E /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AFNetworking.framework; sourceTree = "<group>"; };
 		4242C7EC1CD3549C00A5A845 /* BUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BUtility.h; sourceTree = "<group>"; };
 		4275DCDB1CC4BD0100C67777 /* uexDownloadHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uexDownloadHelper.h; sourceTree = "<group>"; };
@@ -38,11 +39,9 @@
 		4287EC0D1CC0793400EBD876 /* EUExDownloaderMgr.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EUExDownloaderMgr.m; sourceTree = "<group>"; };
 		4287EC121CC098EB00EBD876 /* uexDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = uexDownloader.h; sourceTree = "<group>"; };
 		4287EC131CC098EB00EBD876 /* uexDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = uexDownloader.m; sourceTree = "<group>"; };
-		42CCE7D01D050CF5004CA10F /* AppCanKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AppCanKit.framework; sourceTree = "<group>"; };
 		5A9FF24D1890B0A400E16C52 /* libuexDownloaderMgr.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libuexDownloaderMgr.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A9FF2501890B0A400E16C52 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		5A9FF2541890B0A400E16C52 /* EUExDownloaderMgr-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "EUExDownloaderMgr-Prefix.pch"; sourceTree = "<group>"; };
-		5A9FF2791890B13300E16C52 /* EUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EUtility.h; sourceTree = "<group>"; };
 		5A9FF28C1890B13300E16C52 /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
 		5A9FF28D1890B13300E16C52 /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
 		5A9FF28E1890B13300E16C52 /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
@@ -50,10 +49,6 @@
 		5A9FF2901890B13300E16C52 /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
 		5A9FF2911890B13300E16C52 /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
 		5A9FF2921890B13300E16C52 /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
-		7627CEE31BFC10CD00DB16BC /* EBrowserController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EBrowserController.h; sourceTree = "<group>"; };
-		7627CEE41BFC10E300DB16BC /* WWidgetMgr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WWidgetMgr.h; sourceTree = "<group>"; };
-		7683B9561B33F01400B2BE29 /* EBrowserView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = EBrowserView.h; sourceTree = "<group>"; };
-		7683B9571B33F03C00B2BE29 /* WWidget.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WWidget.h; sourceTree = "<group>"; };
 		7683B9581B33F04700B2BE29 /* WidgetOneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = WidgetOneDelegate.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -63,7 +58,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5A9FF2511890B0A400E16C52 /* Foundation.framework in Frameworks */,
-				42CCE7D11D050CF5004CA10F /* AppCanKit.framework in Frameworks */,
+				42338CB51D4B34C80036F93E /* AppCanKit.framework in Frameworks */,
 				4236564A1CD361C90070CD3E /* AFNetworking.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -99,7 +94,7 @@
 		5A9FF2521890B0A400E16C52 /* EUExDownloaderMgr */ = {
 			isa = PBXGroup;
 			children = (
-				42CCE7D01D050CF5004CA10F /* AppCanKit.framework */,
+				42338CB41D4B34C80036F93E /* AppCanKit.framework */,
 				5A9FF2761890B13300E16C52 /* engineHeader */,
 				5A9FF27A1890B13300E16C52 /* sourceCode */,
 				5A9FF2531890B0A400E16C52 /* Supporting Files */,
@@ -121,12 +116,7 @@
 			isa = PBXGroup;
 			children = (
 				4242C7EC1CD3549C00A5A845 /* BUtility.h */,
-				7627CEE41BFC10E300DB16BC /* WWidgetMgr.h */,
-				7627CEE31BFC10CD00DB16BC /* EBrowserController.h */,
 				7683B9581B33F04700B2BE29 /* WidgetOneDelegate.h */,
-				7683B9571B33F03C00B2BE29 /* WWidget.h */,
-				7683B9561B33F01400B2BE29 /* EBrowserView.h */,
-				5A9FF2791890B13300E16C52 /* EUtility.h */,
 			);
 			path = engineHeader;
 			sourceTree = "<group>";

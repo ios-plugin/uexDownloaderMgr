@@ -22,8 +22,7 @@
  */
 
 #import "EUExDownloaderMgr.h"
-#import "JSON.h"
-#import "EUtility.h"
+#import <AppCanKit/ACEXTScope.h>
 
 
 
@@ -186,7 +185,11 @@
     if([inArguments count] < 1){
         return;
     }
-    [uexDownloadHelper setDebugMode:[inArguments[0] boolValue]];
+    if([inArguments[0] boolValue]){
+        ACLogSetGlobalLogMode(ACLogModeDebug);
+    }else{
+        ACLogSetGlobalLogMode(ACLogModeInfo);
+    }
 }
 
 
@@ -195,7 +198,7 @@
 #ifdef DEBUG
 
 - (void)test:(NSMutableArray *)inArguments{
-    UEXLog(@"%@%@%@",@1,@2,@3);
+
 }
 #endif
 

@@ -23,17 +23,11 @@
 
 
 #import <Foundation/Foundation.h>
-@class WWidget;
+
 @class EUExDownloaderMgr;
 
 
-#ifdef DEBUG
-#define XCODE_DEBUG_MODE 1
-#else 
-#define XCODE_DEBUG_MODE 0
-#endif
 
-#define UEXLog(...) uexDownloadLog(__VA_ARGS__);
 
 
 
@@ -43,9 +37,6 @@
 
 @interface uexDownloadHelper : NSObject
 
-void uexDownloadLog(NSString *format,...);
-
-+ (void)setDebugMode:(BOOL)mode;
 
 
 + (NSDictionary<NSString *,NSString *> *)AppCanHTTPHeadersWithEUExObj:(EUExDownloaderMgr *)euexObj;

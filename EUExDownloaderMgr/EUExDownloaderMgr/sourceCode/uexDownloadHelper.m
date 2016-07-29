@@ -29,24 +29,10 @@
 
 #import "BUtility.h"
 
-static BOOL debugEnabled;
+
 
 
 @implementation uexDownloadHelper
-
-void uexDownloadLog(NSString *format,...){
-    va_list list;
-    va_start(list,format);
-    if (debugEnabled || XCODE_DEBUG_MODE ) {
-        NSLogv(format,list);
-    }
-    va_end(list);
-
-}
-
-+ (void)setDebugMode:(BOOL)mode{
-    debugEnabled = mode;
-}
 
 
 + (NSDictionary<NSString *,NSString *> *)AppCanHTTPHeadersWithEUExObj:(EUExDownloaderMgr *)euexObj{

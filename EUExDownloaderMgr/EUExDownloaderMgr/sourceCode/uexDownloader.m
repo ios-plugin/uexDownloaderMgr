@@ -23,11 +23,8 @@
 
 #import "uexDownloader.h"
 #import "EUExDownloaderMgr.h"
-
-#import "EUtility.h"
-
+#import <AppCanKit/ACEXTScope.h>
 #import "WidgetOneDelegate.h"
-#import "JSON.h"
 
 
 
@@ -45,12 +42,7 @@
 @property (nonatomic,strong)__kindof AFURLSessionManager *sessionManager;
 @property (nonatomic,strong)NSURLSessionDownloadTask *task;
 
-/*
-- (id<uexDownloaderDelegate>)delegate;
-- (void)onStatusCallback;
-- (void)save;
-- (void)prepareToDownload NS_REQUIRES_SUPER;
- */
+
 @end
 
 @implementation uexDownloader
@@ -221,10 +213,10 @@
             Lock();
             if (error) {
                 self.status = uexDownloaderStatusFailed;
-                UEXLog(@"download fail!url:%@,error:%@",self.serverPath,[error localizedDescription]);
+                ACLogDebug(@"download fail!url:%@,error:%@",self.serverPath,[error localizedDescription]);
             }else{
                 self.status = uexDownloaderStatusCompleted;
-                UEXLog(@"download success!url:%@",self.serverPath);
+                ACLogDebug(@"download success!url:%@",self.serverPath);
             }
             [self save];
             [self.delegate uexDownloader:self taskDidCompletedWithError:error];
