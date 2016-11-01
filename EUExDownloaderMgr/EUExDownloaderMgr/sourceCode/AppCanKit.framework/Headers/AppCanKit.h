@@ -6,7 +6,7 @@
 //  Copyright © 2016年 AppCan. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
 
 //! Project version number for AppCanKit.
 FOUNDATION_EXPORT double AppCanKitVersionNumber;
@@ -38,5 +38,6 @@ FOUNDATION_EXPORT const unsigned char AppCanKitVersionString[];
 #import <AppCanKit/UIColor+ACHTMLColor.h>
 #import <AppCanKit/ACAvailability.h>
 #import <AppCanKit/EUExBase.h>
+#import <AppCanKit/EUExBaseDefine.h>
 #import <AppCanKit/ACPluginBundle.h>
 #import <AppCanKit/ACLog.h>

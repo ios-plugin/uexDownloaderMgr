@@ -167,14 +167,15 @@ APPCAN_EXPORT BOOL ACLogAsyncLogEnabled;
 
 
 
-#define _ACLogMacro(isAsync,lvl,func,fmt,...)   \
-    do{                                         \
-        [ACLog log: isAsync                     \
-             level: lvl                         \
-              file: __FILE__                    \
-          function: func                        \
-              line: __LINE__                    \
-            format: (fmt),## __VA_ARGS__];       \
+#define _ACLogMacro(isAsync,lvl,func,fmt,...)       \
+    do{                                             \
+        if ((ACLogGlobalLogMode & lvl))             \
+        [ACLog log: isAsync                         \
+             level: lvl                             \
+              file: __FILE__                        \
+          function: func                            \
+              line: __LINE__                        \
+            format: (fmt),## __VA_ARGS__];          \
     }while(0)
 
 
@@ -203,8 +204,10 @@ APPCAN_EXPORT BOOL ACLogAsyncLogEnabled;
 
 
 
-@protocol ACLogger;
+
 NS_ASSUME_NONNULL_BEGIN
+
+@protocol ACLogger;
 @interface ACLog : NSObject
 + (void)log:(BOOL)isAsynchronous
       level:(ACLogLevel)level
@@ -213,10 +216,18 @@ NS_ASSUME_NONNULL_BEGIN
        line:(NSUInteger)line
      format:(nullable NSString *)fmt,... NS_FORMAT_FUNCTION(6,7);
 
++ (void)log:(BOOL)isAsynchronous
+      level:(ACLogLevel)level
+       file:(NSString *)file
+   function:(NSString *)func
+       line:(NSUInteger)line
+     message:(nullable NSString *)message;
+
 + (void)setGlobalLogMode:(ACLogMode)mode;
-+ (void)setLogMode:(ACLogMode)mode forFile:(const char *)file;
+
++ (void)setLogMode:(ACLogMode)mode forFile:(const char *)file NS_SWIFT_UNAVAILABLE("use 'setLogMode:forFileNamed:' instead");
++ (void)setLogMode:(ACLogMode)mode forFileNamed:(NSString *)fileName;
 + (void)addLogger:(nullable id<ACLogger>)logger;
 + (void)setAsyncLogEnabled:(BOOL)isEnabled;
-
 @end
 NS_ASSUME_NONNULL_END

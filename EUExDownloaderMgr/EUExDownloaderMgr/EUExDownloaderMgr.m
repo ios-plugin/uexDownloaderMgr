@@ -26,9 +26,6 @@
 
 
 
-#define UEX_FALSE @(NO)
-#define UEX_TRUE @(YES)
-
 
 
 
@@ -71,22 +68,23 @@
 
 
 - (NSNumber *)createDownloader:(NSMutableArray *)inArguments{
-    __block NSNumber *result = UEX_FALSE;
+    __block BOOL isSuccess = NO;
     ACArgsUnpack(NSString *identifier) = inArguments;
 
     @onExit{
-        [self.webViewEngine callbackWithFunctionKeyPath:@"uexDownloaderMgr.cbCreateDownloader" arguments:ACArgsPack(identifier,@2,result)];
+        NSNumber *ret = isSuccess ? @0 : @1;
+        [self.webViewEngine callbackWithFunctionKeyPath:@"uexDownloaderMgr.cbCreateDownloader" arguments:ACArgsPack(identifier,@2,ret)];
     };
     if (!identifier || identifier.length == 0 || [self.downloaders.allKeys containsObject:identifier]) {
-        return result;
+        return UEX_FALSE;
     }
     uexDownloader *downloader = [[uexDownloader alloc]initWithIdentifier:identifier euexObj:self];
     if (!downloader) {
-        return result;
+        return UEX_FALSE;
     }
     [self.downloaders setObject:downloader forKey:identifier];
-    result = UEX_TRUE;
-    return result;
+    isSuccess = YES;
+    return UEX_TRUE;
     
 }
 
