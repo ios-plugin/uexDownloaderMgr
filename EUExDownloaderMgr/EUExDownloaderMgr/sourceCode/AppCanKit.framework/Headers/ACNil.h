@@ -1,10 +1,10 @@
 /**
  *
- *	@file   	: EUExDownloaderMgr.h  in EUExDownloaderMgr
+ *	@file   	: ACNil.h  in AppCanKit
  *
- *	@author 	: CeriNo 
- * 
- *	@date   	: Created on 16/4/15.
+ *	@author 	: CeriNo
+ *
+ *	@date   	: Created on 16/5/25.
  *
  *	@copyright 	: 2016 The AppCan Open Source Project.
  *
@@ -21,20 +21,15 @@
  *
  */
 
-
 #import <Foundation/Foundation.h>
-#import "uexDownloader.h"
+
+/**
+ *  NSNull的替代品
+ *  不会导致unrecogized selector崩溃
+ */
+@interface ACNil : NSProxy
 
 
-
-
-
-
-@protocol uexDownloaderDelegate;
-
-@interface EUExDownloaderMgr : EUExBase<uexDownloaderDelegate>
-
-
-
++ (instancetype)null;
 
 @end

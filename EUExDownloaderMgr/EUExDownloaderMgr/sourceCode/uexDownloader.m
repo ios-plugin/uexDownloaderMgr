@@ -23,12 +23,8 @@
 
 #import "uexDownloader.h"
 #import "EUExDownloaderMgr.h"
-#import "ACEUtils.h"
-
-#import "EUtility.h"
-
+#import <AppCanKit/ACEXTScope.h>
 #import "WidgetOneDelegate.h"
-#import "JSON.h"
 
 
 
@@ -46,12 +42,7 @@
 @property (nonatomic,strong)__kindof AFURLSessionManager *sessionManager;
 @property (nonatomic,strong)NSURLSessionDownloadTask *task;
 
-/*
-- (id<uexDownloaderDelegate>)delegate;
-- (void)onStatusCallback;
-- (void)save;
-- (void)prepareToDownload NS_REQUIRES_SUPER;
- */
+
 @end
 
 @implementation uexDownloader
@@ -222,10 +213,10 @@
             Lock();
             if (error) {
                 self.status = uexDownloaderStatusFailed;
-                UEXLog(@"download fail!url:%@,error:%@",self.serverPath,[error localizedDescription]);
+                ACLogDebug(@"download fail!url:%@,error:%@",self.serverPath,[error localizedDescription]);
             }else{
                 self.status = uexDownloaderStatusCompleted;
-                UEXLog(@"download success!url:%@",self.serverPath);
+                ACLogDebug(@"download success!url:%@",self.serverPath);
             }
             [self save];
             [self.delegate uexDownloader:self taskDidCompletedWithError:error];
@@ -279,19 +270,12 @@ static const NSTimeInterval kMinimumSaveInteval = 5;
     if (self.status == uexDownloaderStatusDownloading && [currentTime timeIntervalSinceDate:self.lastOperationTime] > kMinimumSaveInteval) {
         [self save];
     }
-    EBrowserView *cbTarget = self.observer;
+    id<AppCanWebViewEngineObject> cbTarget = self.observer;
     if (!cbTarget) {
-        cbTarget = self.euexObj.meBrwView;
+        cbTarget = self.euexObj.webViewEngine;
     }
-    if (ACE_Available()) {
-        [EUtility browserView:cbTarget
-  callbackWithFunctionKeyPath:@"uexDownloaderMgr.onStatus"
-                    arguments:ACE_ArgsPack(self.identifier,@(self.fileSize),@(self.percent),@(self.status))
-                   completion:nil];
-    }else{
-        NSString *jsStr = [NSString stringWithFormat:@"if(uexDownloaderMgr.onStatus){uexDownloaderMgr.onStatus(%@,%@,%@,%@);}",self.identifier.JSONFragment,@(self.fileSize),@(self.percent),@(self.status)];
-        [EUtility brwView:cbTarget evaluateScript:jsStr];
-    }
+    [cbTarget callbackWithFunctionKeyPath:@"uexDownloaderMgr.onStatus" arguments:ACArgsPack(self.identifier,@(self.fileSize),@(self.percent),@(self.status))];
+    [self.cbFunc executeWithArguments:ACArgsPack(@(self.fileSize),@(self.percent),@(self.status))];
 }
 
 #pragma mark - Cache & Save
@@ -387,176 +371,3 @@ static const NSTimeInterval kMinimumSaveInteval = 5;
 @end
 
 
-/*
-@interface uexDownloader()
-@property (nonatomic,assign)CGFloat progress;
-@property (nonatomic,strong)NSURLSessionDownloadTask *task;
-@property (nonatomic,weak)uexDownloadSessionManager *manager;
-
-@property (nonatomic,assign)BOOL taskCancelledByUser;
-
-
-@end
-
-@implementation uexDownloader
-
-- (instancetype)initWithIdentifier:(NSInteger)identifier euexObj:(EUExDownloaderMgr *)euexObj
-{
-    self = [super init];
-    if (self) {
-        _identifier = @(identifier);
-        _euexObj = euexObj;
-        _manager = [uexDownloadSessionManager defaultManager];
-        _progress = 0;
-        _headers = [uexDownloadHelper AppCanHTTPHeadersWithEUExObj:self.euexObj];
-    }
-    return self;
-}
-
-- (void)setHeaders:(NSDictionary<NSString *,NSString *> *)headers{
-    
-    __block NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:[uexDownloadHelper AppCanHTTPHeadersWithEUExObj:self.euexObj]];
-    [headers enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
-        [dict setValue:obj forKey:key];
-    }];
-    _headers = [dict copy];
-    if (self.info) {
-        self.info.headers = headers;
-    }
-}
-- (void)setProgress:(CGFloat)progress{
-    _progress = progress;
-
-    if (_progress < 0) {
-        _progress = 0;
-    }
-    if (_progress > 1) {
-        _progress = 1;
-    }
-}
-
-
-- (void)getPreparedWithDownloadInfo:(uexDownloadInfo *)info{
-    self.info = info;
-    self.info.headers = self.headers;
-    if (info.resumable && info.resumeCache) {
-
-        [info updataRequestInResumeCache];
-        [self setupResumeTask];
-    }else{
-        [self setupNewTask];
-    }
-
-}
-
-- (void)setupNewTask{
-    self.task = [self.manager downloadTaskWithRequest:[self.info downloadRequest]
-                                             progress:^(NSProgress * _Nonnull downloadProgress) {
-                                                 [self updateInfo:downloadProgress];
-                                             }
-                                          destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
-                                              return [self saveURL];
-                                          }
-                                    completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-
-                                        [self handleDownloaderResult:error];
-                                    }];
-}
-
-- (void)setupResumeTask{
-    self.task = [self.manager downloadTaskWithResumeData:self.info.resumeCache
-                                                progress:^(NSProgress * _Nonnull downloadProgress) {
-                                                    [self updateInfo:downloadProgress];
-                                                }
-                                             destination:^NSURL * _Nonnull(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) {
-                                                    return [self saveURL];
-                                                }
-                                       completionHandler:^(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-                                                    [self handleDownloaderResult:error];
-                                                }];
-}
-
-- (void)handleDownloaderResult:(NSError *)error{
-    if (error) {
-        if (self.info.status == uexDownloadInfoStatusDownloading) {
-            self.info.status = uexDownloadInfoStatusFailed;
-        }
-        [self.info cacheForResuming];
-        [self onStatusCallback];
-        UEXLog(@"download fail!url:%@,error:%@",self.info.downloadPath,[error localizedDescription]);
-    }else{
-        self.info.status = uexDownloadInfoStatusCompleted;
-        [self.info cacheForResuming];
-        [self onStatusCallback];
-        UEXLog(@"download success!url:%@",self.info.downloadPath);
-    }
-}
-
-
-
-- (void)startDownload{
-    [self.task resume];
-}
-
-
-
-- (void)cancelDownloadWithOption:(uexDownloaderCancelOption)option{
-
-    self.info.status = uexDownloadInfoStatusSuspended;
-    if(!(option & uexDownloaderCancelOptionClearCache) && self.info.resumable){
-        @weakify(self);
-        [self.task cancelByProducingResumeData:^(NSData * _Nullable resumeData) {
-            @strongify(self);
-            self.info.resumeCache = resumeData;
-            [self.info cacheForResuming];
-        }];
-        return;
-    }
-    [self.task cancel];
-}
-
-- (void)updateInfo:(NSProgress *)downloadProgress{
-    
-    self.info.fileSize = downloadProgress.totalUnitCount;
-    self.info.bytesWritten = downloadProgress.completedUnitCount;
-    self.info.status = uexDownloadInfoStatusDownloading;
-    static NSTimeInterval kInfoMinimumAutoSaveInterval = 5.0;
-    NSDate *currentDate = [NSDate date];
-    BOOL shouldSave = [currentDate timeIntervalSinceDate:self.info.lastOperationTime] > kInfoMinimumAutoSaveInterval ;
-    
-    self.progress = downloadProgress.fractionCompleted;
-    [self onStatusCallback];
-    if(shouldSave){
-        [self.info cacheForResuming];
-    }
-}
-- (NSURL *)saveURL{
-    return  [NSURL uexDownloader_saveURLFromPath:[self.euexObj absPath:self.info.savePath]];
-
-}
-
-static const NSTimeInterval kMinimumCallbackInteval = 0.05;
-
-- (void)onStatusCallback{
-    static NSDate *lastCallbackTime = nil;
-    
-    
-    BOOL shouldCallback = YES;
-
-        NSDate *currentTime = [NSDate date];
-        if (self.info.status == uexDownloadInfoStatusDownloading && [currentTime timeIntervalSinceDate:lastCallbackTime] < kMinimumCallbackInteval && self.progress != 0 && self.progress != 1) {
-            //避免回调过于频繁占用资源
-           shouldCallback = NO;
-        }else{
-            lastCallbackTime = currentTime;
-        }
-    if (shouldCallback) {
-        static NSInteger count = 0;
-        count++;
-        [self.euexObj callbackWithFunction:@"onStatus" arguments:UEX_ARGS_PACK(self.identifier,@(self.info.fileSize),@(self.progress * 100),@(self.info.status))];
-    }
-
-}
-
-@end
- */

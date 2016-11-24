@@ -1,10 +1,10 @@
 /**
  *
- *	@file   	: EUExDownloaderMgr.h  in EUExDownloaderMgr
+ *	@file   	: AppCanGlobalObjectGetter.h  in AppCanKit
  *
  *	@author 	: CeriNo 
  * 
- *	@date   	: Created on 16/4/15.
+ *	@date   	: Created on 16/5/31.
  *
  *	@copyright 	: 2016 The AppCan Open Source Project.
  *
@@ -20,21 +20,12 @@
  *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
-
-
+ 
 #import <Foundation/Foundation.h>
-#import "uexDownloader.h"
 
+@protocol AppCanGlobalObjectGetter <NSObject>
 
-
-
-
-
-@protocol uexDownloaderDelegate;
-
-@interface EUExDownloaderMgr : EUExBase<uexDownloaderDelegate>
-
-
-
+- (id<AppCanWebViewEngineObject>)getAppCanRootWebViewEngine;
+- (id<AppCanWidgetObject>)getAppCanMainWidget;
 
 @end

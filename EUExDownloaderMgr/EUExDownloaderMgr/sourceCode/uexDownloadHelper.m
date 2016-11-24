@@ -24,41 +24,22 @@
 #import "uexDownloadHelper.h"
 #import <CommonCrypto/CommonCrypto.h>
 #import "WidgetOneDelegate.h"
-#import "WWidgetMgr.h"
-#import "WWidget.h"
 #import "EUExDownloaderMgr.h"
-#import "EBrowserView.h"
-#import "EUtility.h"
+
+
 #import "BUtility.h"
 
-static BOOL debugEnabled;
+
 
 
 @implementation uexDownloadHelper
 
-void uexDownloadLog(NSString *format,...){
-    va_list list;
-    va_start(list,format);
-    if (debugEnabled || XCODE_DEBUG_MODE ) {
-        NSLogv(format,list);
-    }
-    va_end(list);
-
-}
-
-+ (void)setDebugMode:(BOOL)mode{
-    debugEnabled = mode;
-}
-
-+ (WWidget *)mainWidget{
-    return theApp.mwWgtMgr.mainWidget;
-}
 
 + (NSDictionary<NSString *,NSString *> *)AppCanHTTPHeadersWithEUExObj:(EUExDownloaderMgr *)euexObj{
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    WWidget *widget = euexObj.meBrwView.mwWgt;
+    id<AppCanWidgetObject> widget = euexObj.webViewEngine.widget;
     if (!widget) {
-        widget = [self mainWidget];
+        widget = AppCanMainWidget();
     }
     NSString *time= [NSDate date].uexDownloader_timestamp;
     NSString *appId = @"";
@@ -66,7 +47,7 @@ void uexDownloadLog(NSString *format,...){
     
     NSString *pluginStr = @"widget/plugin";
     if ([widget.indexUrl rangeOfString:pluginStr].length == [pluginStr length]) {
-        WWidget *mainWgt = [self mainWidget];
+        id<AppCanWidgetObject> mainWgt = AppCanMainWidget();
         appId = mainWgt.appId;
         appKey = mainWgt.widgetOneId;
         

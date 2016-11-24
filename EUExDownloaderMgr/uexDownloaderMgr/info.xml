@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <uexplugins>
+<<<<<<< HEAD
   <plugin uexName="uexDownloaderMgr" version="3.3.16" build="16">
     <info>16: IDE证书更新</info>
     <build>15: 用AFNetworking重构</build>
@@ -20,3 +21,10 @@
     <build>0: 下载管理功能插件</build>
   </plugin>
 </uexplugins>
+=======
+    <plugin
+        uexName="uexDownloaderMgr" version="4.0.0" build="0">
+        <info>0:下载管理功能插件</info>
+    </plugin>
+</uexplugins>
+>>>>>>> 4.0-dev

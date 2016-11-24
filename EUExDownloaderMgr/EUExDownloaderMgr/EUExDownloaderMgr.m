@@ -22,13 +22,9 @@
  */
 
 #import "EUExDownloaderMgr.h"
-#import "JSON.h"
-#import "EUtility.h"
-#import "ACEUtils.h"
+#import <AppCanKit/ACEXTScope.h>
 
 
-#define UEX_FALSE @(NO)
-#define UEX_TRUE @(YES)
 
 
 
@@ -39,8 +35,8 @@
 @implementation EUExDownloaderMgr
 
 #pragma mark - Life Cycle
-- (instancetype)initWithBrwView:(EBrowserView *)eInBrwView{
-    self=[super initWithBrwView:eInBrwView];
+- (instancetype)initWithWebViewEngine:(id<AppCanWebViewEngineObject>)engine{
+    self=[super initWithWebViewEngine:engine];
     if(self){
         _downloaders = [NSMutableDictionary dictionary];
     }
@@ -55,72 +51,76 @@
     [self clean];
 }
 #pragma mark - API
-- (NSNumber *)createDownloader:(NSMutableArray *)inArguments{
-    __block NSNumber *result = @1;
-    __block NSString *identifier = nil;
 
-    @onExit{
-        if (ACE_Available()) {
-            [EUtility browserView:self.meBrwView
-      callbackWithFunctionKeyPath:@"uexDownloaderMgr.cbCreateDownloader"
-                        arguments:ACE_ArgsPack(identifier,@2,result)
-                       completion:nil];
-        }else{
-            NSString *jsStr = [NSString stringWithFormat:@"if(uexDownloaderMgr.cbCreateDownloader){uexDownloaderMgr.cbCreateDownloader(%@,%@,%@);}",identifier.JSONFragment,@2,result];
-            [EUtility brwView:self.meBrwView evaluateScript:jsStr];
-        }
-    };
-    if([inArguments count] < 1){
-        return result;
-    }
-    identifier = getString(inArguments[0]);
-    if ([self.downloaders.allKeys containsObject:identifier]) {
-        return result;
+- (NSString *)create:(NSMutableArray *)inArguments{
+    ACArgsUnpack(NSDictionary *info) = inArguments;
+    NSString *identifier = stringArg(info[@"id"]) ?: [NSUUID UUID].UUIDString;
+    if (!identifier || identifier.length == 0 || [self.downloaders.allKeys containsObject:identifier]) {
+        return nil;
     }
     uexDownloader *downloader = [[uexDownloader alloc]initWithIdentifier:identifier euexObj:self];
     if (!downloader) {
-        return result;
+        return nil;
     }
     [self.downloaders setObject:downloader forKey:identifier];
-    result = @0;
-    return result;
+    return identifier;
+}
+
+
+- (NSNumber *)createDownloader:(NSMutableArray *)inArguments{
+    __block BOOL isSuccess = NO;
+    ACArgsUnpack(NSString *identifier) = inArguments;
+
+    @onExit{
+        NSNumber *ret = isSuccess ? @0 : @1;
+        [self.webViewEngine callbackWithFunctionKeyPath:@"uexDownloaderMgr.cbCreateDownloader" arguments:ACArgsPack(identifier,@2,ret)];
+
+    };
+    if (!identifier || identifier.length == 0 || [self.downloaders.allKeys containsObject:identifier]) {
+        return UEX_FALSE;
+    }
+    uexDownloader *downloader = [[uexDownloader alloc]initWithIdentifier:identifier euexObj:self];
+    if (!downloader) {
+        return UEX_FALSE;
+    }
+    [self.downloaders setObject:downloader forKey:identifier];
+    isSuccess = YES;
+    return UEX_TRUE;
     
 }
 
-- (NSNumber *)download:(NSMutableArray *)inArguments{
-    if([inArguments count] < 4){
-        return UEX_FALSE;
-    }
-    NSString *identifier = getString(inArguments[0]);
-    NSString *serverURL = getString(inArguments[1]);
-    NSString *savePath = getString(inArguments[2]);
-    BOOL resumable = [inArguments[3] boolValue];
+- (void)download:(NSMutableArray *)inArguments{
+
+    ACArgsUnpack(NSString *identifier,NSString *serverURL,NSString *savePath,NSNumber *resumableNum,ACJSFunctionRef *cb) = inArguments;
+    BOOL resumable = [resumableNum boolValue];
     
     if (![self.downloaders.allKeys containsObject:identifier] ||
         !serverURL ||
         !savePath) {
-        return UEX_FALSE;
+        return;
     }
     uexDownloader *downloader = self.downloaders[identifier];
     downloader.serverPath = serverURL;
     downloader.savePath = [self absPath:savePath];
     downloader.resumable = resumable;
+    downloader.cbFunc = cb;
     [downloader startDownload];
-    return UEX_TRUE;
+
 }
 
 
 - (NSNumber *)cancelDownload:(NSMutableArray *)inArguments{
-    if([inArguments count] < 1){
+
+    ACArgsUnpack(NSString *serverURL,NSNumber *optionNum) = inArguments;
+    if(!serverURL){
         return UEX_FALSE;
     }
-    NSString *serverURL = getString(inArguments[0]);
     uexDownloader *downloader = [self downloaderWithServerURL:serverURL];
     if (!downloader) {
         return UEX_FALSE;
     }
     uexDownloaderCancelOption option = uexDownloaderCancelOptionDefault;
-    if (inArguments.count > 1 && [inArguments[1] boolValue]) {
+    if ([optionNum boolValue]) {
         option |= uexDownloaderCancelOptionClearCache;
     }
     [downloader cancelDownloadWithOption:option];
@@ -129,16 +129,9 @@
 
 
 - (NSNumber *)setHeaders:(NSMutableArray *)inArguments{
-    if (inArguments.count < 2) {
-        return UEX_FALSE;
-    }
-    NSString *identifier = getString(inArguments[0]);
+    ACArgsUnpack(NSString *identifier,NSDictionary *headers) = inArguments;
     uexDownloader *downloader = self.downloaders[identifier];
-    if (!downloader) {
-        return UEX_FALSE;
-    }
-    id headers = [inArguments[1] JSONValue];
-    if (!headers || ![headers isKindOfClass:[NSDictionary class]]) {
+    if (!downloader || !headers) {
         return UEX_FALSE;
     }
     [downloader setHeaders:headers];
@@ -146,26 +139,18 @@
     
 }
 
-- (NSString *)getInfo:(NSMutableArray *)inArguments{
+- (NSDictionary *)getInfo:(NSMutableArray *)inArguments{
     __block NSString *identifier = nil;
     __block NSDictionary *info = nil;
     
     @onExit{
-        if (ACE_Available()) {
-            [EUtility browserView:self.meBrwView
-      callbackWithFunctionKeyPath:@"uexDownloaderMgr.cbGetInfo"
-                        arguments:ACE_ArgsPack(identifier,@1,info.JSONFragment)
-                       completion:nil];
-        }else{
-            NSString *jsStr = [NSString stringWithFormat:@"if(uexDownloaderMgr.cbGetInfo){uexDownloaderMgr.cbGetInfo(%@,%@,%@)};",identifier.JSONFragment,@1,info.JSONFragment.JSONFragment];
-            [EUtility brwView:self.meBrwView evaluateScript:jsStr];
-        }
+        [self.webViewEngine callbackWithFunctionKeyPath:@"uexDownloaderMgr.cbGetInfo" arguments:ACArgsPack(identifier,@1,info.ac_JSONFragment)];
+
     };
      
-    if (inArguments.count == 0) {
-        return @"";
-    }
-    NSString *serverURL = getString(inArguments[0]);
+
+    ACArgsUnpack(NSString *serverURL) = inArguments;
+
     uexDownloader *downloader = [self downloaderWithServerURL:serverURL];
     if (!downloader) {
         downloader = [[uexDownloader alloc]initFromCacheWithServerPath:serverURL];
@@ -174,7 +159,7 @@
     identifier = downloader.identifier;
     info = downloader.info;
     
-    return [info JSONFragment];
+    return info;
     
     
 }
@@ -184,7 +169,7 @@
     if([inArguments count] < 1){
         return UEX_FALSE;
     }
-    NSString *identifier = getString(inArguments[0]);
+    ACArgsUnpack(NSString *identifier) = inArguments;
     uexDownloader *downloader = self.downloaders[identifier];
     if (!downloader) {
         return UEX_FALSE;
@@ -200,7 +185,11 @@
     if([inArguments count] < 1){
         return;
     }
-    [uexDownloadHelper setDebugMode:[inArguments[0] boolValue]];
+    if([inArguments[0] boolValue]){
+        ACLogSetGlobalLogMode(ACLogModeDebug);
+    }else{
+        ACLogSetGlobalLogMode(ACLogModeInfo);
+    }
 }
 
 
@@ -209,23 +198,13 @@
 #ifdef DEBUG
 
 - (void)test:(NSMutableArray *)inArguments{
-    UEXLog(@"%@%@%@",@1,@2,@3);
+
 }
 #endif
 
 
 #pragma mark - Private 
 
-static NSString * getString(id obj){
-    NSString *str = nil;
-    if ([obj isKindOfClass:[NSString class]]) {
-        str = obj;
-    }
-    if ([obj isKindOfClass:[NSNumber class]]) {
-        str = [obj stringValue];
-    }
-    return str;
-}
 
 - (uexDownloader *)downloaderWithServerURL:(NSString *)serverURL{
     uexDownloader *downloader = nil;
