@@ -42,9 +42,11 @@
     }
     return self;
 }
-- (void)clean{
-    for(uexDownloader *aDownloader in self.downloaders){
-        [aDownloader clean];
+- (void)clean {
+    for(uexDownloader *aDownloader in self.downloaders) {
+        if ([aDownloader respondsToSelector:@selector(cancelDownload)]) {
+            [aDownloader cancelDownload];
+        }
     }
 }
 - (void)dealloc{
@@ -174,7 +176,7 @@
     if (!downloader) {
         return UEX_FALSE;
     }
-    [downloader clean];
+    [downloader cancelDownload];
     [self.downloaders removeObjectForKey:downloader.identifier];
     return UEX_TRUE;
 }
