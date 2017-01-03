@@ -148,7 +148,7 @@
     [self.task resume];
 }
 
-- (void)clean{
+- (void)cancelDownload {//clean修改为cancelDownload，避免定位问题时被误导
     [self cancelDownloadWithOption:uexDownloaderCancelOptionDefault];
 }
 

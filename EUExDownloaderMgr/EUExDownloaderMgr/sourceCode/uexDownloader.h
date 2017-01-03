@@ -69,7 +69,7 @@ typedef NS_ENUM(NSInteger,uexDownloaderStatus){
 - (instancetype)initFromCacheWithServerPath:(NSString *)serverPath;
 - (void)startDownload;
 - (void)cancelDownloadWithOption:(uexDownloaderCancelOption)option;
-- (void)clean;
+- (void)cancelDownload;
 - (NSDictionary *)info;
 @end
 
