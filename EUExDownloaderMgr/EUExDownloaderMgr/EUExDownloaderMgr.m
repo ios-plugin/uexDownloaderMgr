@@ -47,9 +47,10 @@
     return self;
 }
 - (void)clean{
-    for(uexDownloader *aDownloader in self.downloaders){
+    for(uexDownloader *aDownloader in self.downloaders.allValues){
         [aDownloader clean];
     }
+    [self.downloaders removeAllObjects];
 }
 - (void)dealloc{
     [self clean];
