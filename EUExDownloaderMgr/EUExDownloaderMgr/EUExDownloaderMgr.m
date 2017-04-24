@@ -43,11 +43,12 @@
     return self;
 }
 - (void)clean {
-    for(uexDownloader *aDownloader in self.downloaders) {
+    for(uexDownloader *aDownloader in self.downloaders.allValues) {
         if ([aDownloader respondsToSelector:@selector(cancelDownload)]) {
             [aDownloader cancelDownload];
         }
     }
+    [self.downloaders removeAllObjects];
 }
 - (void)dealloc{
     [self clean];
