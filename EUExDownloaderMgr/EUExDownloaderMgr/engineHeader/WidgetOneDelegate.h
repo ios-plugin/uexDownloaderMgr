@@ -24,6 +24,7 @@
 @class PluginParser;
 @class ACEWebViewController;
 @class ACEDrawerViewController;
+@class RESideMenu;
 
 @interface WidgetOneDelegate: NSObject <UIApplicationDelegate,UIAlertViewDelegate> {
 	UIWindow *window;
@@ -45,6 +46,7 @@
 @property (nonatomic) BOOL useCloseAppWithJaibroken;
 @property (nonatomic) BOOL useRC4EncryptWithLocalstorage;
 @property (nonatomic) BOOL useUpdateWgtHtmlControl;
+@property (nonatomic) BOOL signVerifyControl;
 @property (nonatomic) BOOL useCertificateControl;
 @property (nonatomic) BOOL useIsHiddenStatusBarControl;
 @property (nonatomic,readonly) BOOL useEraseAppDataControl;
@@ -63,12 +65,23 @@
 @property (nonatomic, retain) ACEWebViewController *leftWebController;
 @property (nonatomic, retain) ACEWebViewController *rightWebController;
 @property (nonatomic, retain) ACEDrawerViewController *drawerController;
+@property (nonatomic, retain) RESideMenu *sideMenuViewController;
 @property (nonatomic, assign) NSInteger enctryptcj;
 @property (nonatomic, retain) NSMutableDictionary *globalPluginDict;
 
+//4.0
+@property (nonatomic, copy) NSString * useAppCanEMMTenantID;//EMM单租户场景下默认的租户ID
+@property (nonatomic, copy) NSString * useAppCanAppStoreHost;//uexAppstroeMgr所需的host
+@property (nonatomic, copy) NSString * useAppCanMBaaSHost;//引擎中MBaaS读取的host
+@property (nonatomic, copy) NSString * useAppCanIMXMPPHost;//uexIM插件XMPP通道使用的host
+@property (nonatomic, copy) NSString * useAppCanIMHTTPHost;//uexIM插件HTTP通道使用的host
+@property (nonatomic, copy) NSString * useAppCanTaskSubmitSSOHost;//uexTaskSubmit登陆所需host
+@property (nonatomic, copy) NSString * useAppCanTaskSubmitHost;//uexTaskSubmit提交任务所需host
+@property(nonatomic) BOOL validatesSecureCertificate;//是否校验证书
+
 
 //-(NSString *)getPayPublicRsaKey;
-
+-(void)rootPageDidFinishLoading;
 @end
 
 #define theApp ((WidgetOneDelegate *)[[UIApplication sharedApplication] delegate])
