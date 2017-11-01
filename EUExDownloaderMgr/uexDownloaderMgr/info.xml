@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <uexplugins>
-  <plugin uexName="uexDownloaderMgr" version="3.3.17" build="17">
-    <info>17: 关闭网页后,会正确停止当前网页的下载任务</info>
+  <plugin uexName="uexDownloaderMgr" version="3.3.18" build="18">
+    <info>18: 下载失败后增加删除文件的逻辑，防止下载失败后icache认为已成功下载；修正是否校验证书的开关判断错误问题</info>
+    <build>17: 关闭网页后,会正确停止当前网页的下载任务</build>
     <build>16: IDE证书更新</build>
     <build>15: 用AFNetworking重构</build>
     <build>14: 修复在复用窗口中使用时回调丢失的bug</build>

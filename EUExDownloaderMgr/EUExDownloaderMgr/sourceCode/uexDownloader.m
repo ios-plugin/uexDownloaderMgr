@@ -222,6 +222,11 @@
             Lock();
             if (error) {
                 self.status = uexDownloaderStatusFailed;
+                //请求出错时，删除下载的文件（否则内容也是错误的）
+                NSFileManager *fm = [NSFileManager defaultManager];
+                if([fm fileExistsAtPath:self.savePath]){
+                    [fm removeItemAtPath:self.savePath error:nil];
+                }
                 UEXLog(@"download fail!url:%@,error:%@",self.serverPath,[error localizedDescription]);
             }else{
                 self.status = uexDownloaderStatusCompleted;
@@ -255,8 +260,8 @@
     [headers addEntriesFromDictionary:[uexDownloadHelper AppCanHTTPHeadersWithEUExObj:self.euexObj]];
     self.headers = [headers copy];
     
-    
-    if(theApp.useCertificateControl && [self.serverPath hasPrefix:@"https://"]){
+    //是否校验服务端证书开关的判断
+    if(theApp.validatesSecureCertificate && [self.serverPath hasPrefix:@"https://"]){
         //setupSSLPolicy
         [self.sessionManager setSessionDidReceiveAuthenticationChallengeBlock:^NSURLSessionAuthChallengeDisposition(NSURLSession * _Nonnull session, NSURLAuthenticationChallenge * _Nonnull challenge, NSURLCredential *__autoreleasing  _Nullable * _Nullable credential) {
             return [uexDownloadHelper authChallengeDispositionWithChallenge:challenge credential:credential];
