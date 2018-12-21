@@ -129,9 +129,58 @@
         }
     };
     NSURL * (^handleDestinationBlock)(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) = ^NSURL *(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response){
-        return [NSURL uexDownloader_saveURLFromPath:self.savePath];
+        
+        NSURL *urlPath;
+        if (self.isResponse) {
+            //拿到响应头信息
+            NSHTTPURLResponse *res = (NSHTTPURLResponse *)response;
+            //解析拿到的响应数据
+            NSDictionary *allHeaderFieldsDict = res.allHeaderFields;
+            if (allHeaderFieldsDict.count > 0) {
+                NSString *contentDisposition = [allHeaderFieldsDict objectForKey:@"Content-Disposition"];
+                /*
+                 "Content-Disposition" = "attachment;filename=%E6%B0%B8%E4%B8%AD%E6%B5%8B%E8%AF%95%E6%96%87%E6%A1%A3.pdf";
+                 截取 %E6%B0%B8%E4%B8%AD%E6%B5%8B%E8%AF%95%E6%96%87%E6%A1%A3 这部分过程
+                 
+                 */
+                //分割取后半部分("filename=%E6%B0%B8%E4%B8%AD%E6%B5%8B%E8%AF%95%E6%96%87%E6%A1%A3.pdf";)
+                NSArray *afterArrInfo = [contentDisposition  componentsSeparatedByString:@"="];
+                NSString *str;
+                if (afterArrInfo.count>1) {
+                    str =  [afterArrInfo objectAtIndex:1];
+                }
+                //UTF8转中文
+                NSString *realName = [str stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+                //截取后半部分
+                NSString *fileName;
+                NSArray *realFileArrInfo = [realName  componentsSeparatedByString:@"."];
+                NSMutableArray *lastArr = [NSMutableArray arrayWithArray:realFileArrInfo];
+                [lastArr removeLastObject];
+                fileName = [lastArr componentsJoinedByString:@"."];
+            
+                //将原有的URL的文件名称
+                NSString *savePathStr = [self.savePath stringByDeletingLastPathComponent];
+                NSString *realSavePath =  [NSString stringWithFormat:@"%@/%@.%@",savePathStr,fileName,realFileArrInfo.lastObject];
+            
+                NSFileManager *fm = [NSFileManager defaultManager];
+                NSString *reFileName = realSavePath;
+                for (int i = 1;; i++) {
+                    if([fm fileExistsAtPath:reFileName]){
+                        reFileName = [NSString stringWithFormat:@"%@%@(%d)%@",savePathStr,fileName,i,realFileArrInfo.lastObject];
+                    }else{
+                        break;
+                    }
+                }
+                NSLog(@"realSavePath ==== %@ ",reFileName);
+                urlPath = [NSURL uexDownloader_saveURLFromPath:reFileName];
+            }
+        }else {
+              urlPath = [NSURL uexDownloader_saveURLFromPath:self.savePath];
+        }
+        return urlPath;
     };
     void (^handleCompletionBlock)(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) = nil;
+    
     if (self.resumable && self.resumeCache) {
         self.task = [self.sessionManager downloadTaskWithResumeData:self.resumeCache
                                                            progress:handleProgressBlock
@@ -185,10 +234,9 @@
     [self.headers enumerateKeysAndObjectsUsingBlock:^(NSString * _Nonnull key, NSString * _Nonnull obj, BOOL * _Nonnull stop) {
         [request addValue:obj forHTTPHeaderField:key];
     }];
+    
     return [request copy];
 }
-
-
 
 - (id<uexDownloaderDelegate>)delegate{
     if (!self.isGlobalDownloader) {
@@ -198,10 +246,9 @@
     }
 }
 
-
 - (__kindof AFURLSessionManager *)sessionManager{
     if(!_sessionManager){
-        AFURLSessionManager *manager = [[AFURLSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
+        AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
         @weakify(self);
         [manager setSessionDidBecomeInvalidBlock:^(NSURLSession * _Nonnull session, NSError * _Nonnull error) {
             @strongify(self);
@@ -237,9 +284,6 @@
         self.resumeCache = oldDownloader.resumeCache;
         [self updateCachedRequestHeader];
     }
-
-    
-    
     
     //add appcan header;
     NSMutableDictionary *headers = [self.headers?:@{} mutableCopy];

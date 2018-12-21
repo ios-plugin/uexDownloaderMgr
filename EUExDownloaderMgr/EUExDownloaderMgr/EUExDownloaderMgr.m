@@ -96,7 +96,6 @@
 
     ACArgsUnpack(NSString *identifier,NSString *serverURL,NSString *savePath,NSNumber *resumableNum,ACJSFunctionRef *cb) = inArguments;
     BOOL resumable = [resumableNum boolValue];
-    
     if (![self.downloaders.allKeys containsObject:identifier] ||
         !serverURL ||
         !savePath) {
@@ -107,6 +106,7 @@
     downloader.savePath = [self absPath:savePath];
     downloader.resumable = resumable;
     downloader.cbFunc = cb;
+    downloader.isResponse = (BOOL)[inArguments objectAtIndex:4];
     [downloader startDownload];
 
 }
