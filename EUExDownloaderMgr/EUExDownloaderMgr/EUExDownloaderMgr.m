@@ -106,7 +106,6 @@
     downloader.savePath = [self absPath:savePath];
     downloader.resumable = resumable;
     downloader.cbFunc = cb;
-    downloader.isResponse = (BOOL)[inArguments objectAtIndex:4];
     [downloader startDownload];
 
 }

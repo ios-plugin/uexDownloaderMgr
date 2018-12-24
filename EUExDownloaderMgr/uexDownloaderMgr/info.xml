@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <uexplugins>
     <plugin
-        uexName="uexDownloaderMgr" version="4.0.3" build="2">
-        <info>3: 从响应头里获取文件名转中文加序号</info>
+        uexName="uexDownloaderMgr" version="4.0.4" build="2">
+        <info>4: 修改重复下载，序列号累加的功能没有bug</info>
+        <build>3: 从响应头里获取文件名转中文加序号</build>
         <build>2: 关闭网页后,会正确停止当前网页的下载任务</build>
         <build>1:修复一个会导致崩溃的问题</build>
         <build>0:下载功能插件</build>
