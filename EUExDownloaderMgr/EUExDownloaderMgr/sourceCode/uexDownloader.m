@@ -149,9 +149,9 @@
             if (afterArrInfo.count>1) {
                 str =  [afterArrInfo objectAtIndex:1];
             }
-            //UTF8转中文
-            NSString *realName = [str stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-            
+            // utf8乱码转中文
+            NSString *realName = [str stringByRemovingPercentEncoding];
+
             //截取后半部分
             NSString *fileName;
             NSArray *realFileArrInfo = [realName  componentsSeparatedByString:@"."];
