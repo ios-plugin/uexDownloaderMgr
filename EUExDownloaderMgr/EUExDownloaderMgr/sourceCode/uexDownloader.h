@@ -60,7 +60,7 @@ typedef NS_ENUM(NSInteger,uexDownloaderStatus){
 @property (nonatomic,assign,getter=isResumable)BOOL resumable;
 @property (nonatomic,assign)uexDownloaderStatus status;
 @property (nonatomic,strong)ACJSFunctionRef *cbFunc;
-
+@property (nonatomic,assign)BOOL isNeedReName;//是否需要重命名
 
 
 

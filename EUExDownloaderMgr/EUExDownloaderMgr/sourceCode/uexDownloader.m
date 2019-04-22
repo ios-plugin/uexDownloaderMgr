@@ -141,17 +141,18 @@
          截取 %E6%B0%B8%E4%B8%AD%E6%B5%8B%E8%AF%95%E6%96%87%E6%A1%A3 这部分过程
          */
         //分割取后半部分("filename=%E6%B0%B8%E4%B8%AD%E6%B5%8B%E8%AF%95%E6%96%87%E6%A1%A3.pdf";)
-        //filename 判断是否有响应头，有这个字段就有响应头
-        if ([contentDisposition containsString:@"filename"]) {
+        //filename 判断是否有响应头，有这个字段就有响应头,进行文件改名操作
+        if (([contentDisposition containsString:@"filename"] && self.isNeedReName == YES)) {
             
             NSArray *afterArrInfo = [contentDisposition  componentsSeparatedByString:@"="];
             NSString *str;
             if (afterArrInfo.count>1) {
                 str =  [afterArrInfo objectAtIndex:1];
             }
-            // utf8乱码转中文
-            NSString *realName = [str stringByRemovingPercentEncoding];
-
+            //字符串str 解码文件名
+            NSString *realName = [self URLDecodedString:str];
+            NSLog(@"realName ===== %@",realName);
+            
             //截取后半部分
             NSString *fileName;
             NSArray *realFileArrInfo = [realName  componentsSeparatedByString:@"."];
@@ -161,27 +162,27 @@
             
             //将原有的URL的文件名称
             NSString *savePathStr = [self.savePath stringByDeletingLastPathComponent];
-            NSString *realSavePath =  [NSString stringWithFormat:@"%@/%@.%@",savePathStr,fileName,realFileArrInfo.lastObject];
+            NSString *realSavePath =  [NSString stringWithFormat:@"%@/%@.%@",savePathStr,fileName,realFileArrInfo.lastObject];//savePathStr:路径地址 realFileArrInfo.lastObject:取到的是扩展名
             
             NSFileManager *fm = [NSFileManager defaultManager];
-            NSString *reFileName = realSavePath;
+            NSString *reFilePath = realSavePath;
             for (int i = 1;; i++) {
-                if([fm fileExistsAtPath:reFileName]){
-                    reFileName = [NSString stringWithFormat:@"%@/%@(%d).%@",savePathStr,fileName,i,realFileArrInfo.lastObject];
+                if([fm fileExistsAtPath:reFilePath]){
+                    reFilePath = [NSString stringWithFormat:@"%@/%@(%d).%@",savePathStr,fileName,i,realFileArrInfo.lastObject];
                 }else{
                     break;
                 }
             }
-            NSLog(@"reFileName ==== %@ ",reFileName);
-             urlPath = [NSURL uexDownloader_saveURLFromPath:reFileName];
-            
-        } else {
-            
-           urlPath = [NSURL uexDownloader_saveURLFromPath:self.savePath];
-            
+            NSLog(@"解码 decodeFile的方法 ====== %@",reFilePath);
+            NSLog(@"reFileName ==== %@ ",realName);
+            urlPath = [NSURL uexDownloader_saveURLFromPath:reFilePath];
+            NSLog(@"最终的 urlPath ======= %@",urlPath);
+        }else {
+             urlPath = [NSURL uexDownloader_saveURLFromPath:self.savePath];
         }
-        return urlPath;
+             return urlPath;
     };
+    
     void (^handleCompletionBlock)(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) = nil;
     
     if (self.resumable && self.resumeCache) {
@@ -204,7 +205,11 @@
     [self cancelDownloadWithOption:uexDownloaderCancelOptionDefault];
 }
 
-
+//URL解码
+- (NSString *)URLDecodedString:(NSString *)str{
+    NSString *result = [str stringByReplacingOccurrencesOfString:@"+" withString:@" "];
+    return [result stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+}
 
 #pragma mark - Util
 
