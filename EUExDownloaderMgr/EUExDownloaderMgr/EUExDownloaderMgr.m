@@ -25,10 +25,6 @@
 #import <AppCanKit/ACEXTScope.h>
 
 
-
-
-
-
 @interface EUExDownloaderMgr()
 @property (nonatomic,strong)NSMutableDictionary<NSString *,uexDownloader *> *downloaders;
 @end
@@ -94,9 +90,10 @@
 
 - (void)download:(NSMutableArray *)inArguments{
 
-    ACArgsUnpack(NSString *identifier,NSString *serverURL,NSString *savePath,NSNumber *resumableNum,ACJSFunctionRef *cb) = inArguments;
+    ACArgsUnpack(NSString *identifier,NSString *serverURL,NSString *savePath,NSNumber *resumableNum,ACJSFunctionRef *cb,NSNumber *isNeedReName) = inArguments;
     BOOL resumable = [resumableNum boolValue];
-    
+    //isNeedReName 是否需要重命名
+    BOOL isneedRename = [isNeedReName boolValue];
     if (![self.downloaders.allKeys containsObject:identifier] ||
         !serverURL ||
         !savePath) {
@@ -104,13 +101,27 @@
     }
     uexDownloader *downloader = self.downloaders[identifier];
     downloader.serverPath = serverURL;
+    NSLog(@"savePath  ======= %@",savePath);
     downloader.savePath = [self absPath:savePath];
+    //本段代码是为兼容之前引擎版本没添加这段的逻辑---（iOS_Engine_4.3.20_190418_02版本之前的）
+    if ([downloader.savePath hasPrefix:@"exterbox://"]){
+        NSLog(@"这是判断 ”exterbox://“ 的逻辑，因为引擎里没添加此逻辑，所以在此添加的");
+        NSString *documentPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES).firstObject;
+        NSString *basicPath = [documentPath stringByAppendingPathComponent:@"exterbox"];
+        NSLog(@"basicPath ==== %@",basicPath);
+        if (![[NSFileManager defaultManager] fileExistsAtPath:basicPath]) {
+            [[NSFileManager defaultManager] createDirectoryAtPath:basicPath withIntermediateDirectories:YES attributes:nil error:nil];
+        }
+        NSString *exterStr = @"exterbox://";
+        downloader.savePath = [basicPath stringByAppendingPathComponent:[downloader.savePath substringFromIndex:exterStr.length]];
+        NSLog(@"absFilePath ============= %@",downloader.savePath);
+    }
+    NSLog(@"downloader.savePath ======= %@",downloader.savePath);
     downloader.resumable = resumable;
     downloader.cbFunc = cb;
+    downloader.isNeedReName = isneedRename;
     [downloader startDownload];
-
 }
-
 
 - (NSNumber *)cancelDownload:(NSMutableArray *)inArguments{
 
