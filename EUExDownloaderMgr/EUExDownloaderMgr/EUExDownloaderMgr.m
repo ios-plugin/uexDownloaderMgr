@@ -252,29 +252,13 @@
     return downloader;
 }
 
-/**
- 在主线程将downloader解除引用。
- 因为downloader中包含一个JSFunc的对象引用，当自身被解除引用触发内存回收的时候，就会在当前线程触发dealloc，也可能会在当前线程中触发持有的JSFunc对象的dealloc。而我们的ACJSFunctionRef的dealloc中存在访问JS对象的操作，该操作不允许在非主线程中进行，故而必须做保护。（暂时也没找到更好的办法，隐约觉得可能是引擎的ACJSFunctionRef的dealloc可以改一下，但是又怕引发其他问题）。 note at 20190823 by yipeng
-
- */
-- (void)setDownloaderSessionBecomeInvalidByMainThread:(__kindof uexDownloader *)downloader {
-    if([NSThread isMainThread]){
-        [self.downloaders removeObjectForKey:downloader.identifier];
-    } else {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self.downloaders removeObjectForKey:downloader.identifier];
-        });
-    }
-}
-
 #pragma mark - uexDownloaderDelegate
 
 - (void)uexDownloader:(__kindof uexDownloader *)downloader taskDidCompletedWithError:(NSError *)error{
     
 }
 - (void)uexDownloader:(__kindof uexDownloader *)downloader sessionDidInvalidatedWithError:(NSError *)error{
-    // 解除uexDownloader对象的引用，触发内存回收
-    [self setDownloaderSessionBecomeInvalidByMainThread:downloader];
+    [self.downloaders removeObjectForKey:downloader.identifier];
 }
 - (void)uexDownloaderDidFinishHandlingBackgroundSessionEvents:(__kindof uexDownloader *)downloader{
     
