@@ -270,12 +270,8 @@ static const NSTimeInterval kMinimumSaveInteval = 5;
     if (self.status == uexDownloaderStatusDownloading && [currentTime timeIntervalSinceDate:self.lastOperationTime] > kMinimumSaveInteval) {
         [self save];
     }
-    id<AppCanWebViewEngineObject> cbTarget = self.observer;
-    if (!cbTarget) {
-        cbTarget = self.euexObj.webViewEngine;
-    }
-    [cbTarget callbackWithFunctionKeyPath:@"uexDownloaderMgr.onStatus" arguments:ACArgsPack(self.identifier,@(self.fileSize),@(self.percent),@(self.status))];
-    [self.cbFunc executeWithArguments:ACArgsPack(@(self.fileSize),@(self.percent),@(self.status))];
+    [self.euexObj callbackWithFunctionKeyPathByMainThread:@"uexDownloaderMgr.onStatus" arguments:ACArgsPack(self.identifier,@(self.fileSize),@(self.percent),@(self.status))];
+    [self.euexObj jsCallbackExecuteByMainThread:self.cbFunc withArguments:ACArgsPack(@(self.fileSize),@(self.percent),@(self.status))];
 }
 
 #pragma mark - Cache & Save
@@ -367,6 +363,9 @@ static const NSTimeInterval kMinimumSaveInteval = 5;
     return self;
 }
 
+- (void)dealloc{
+    ACLogVerbose(@"uexDownloader %@ dealloc", self);
+}
 
 @end
 

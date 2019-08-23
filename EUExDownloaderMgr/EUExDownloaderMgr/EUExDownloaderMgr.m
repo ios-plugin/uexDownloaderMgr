@@ -76,7 +76,7 @@
 
     @onExit{
         NSNumber *ret = isSuccess ? @0 : @1;
-        [self.webViewEngine callbackWithFunctionKeyPath:@"uexDownloaderMgr.cbCreateDownloader" arguments:ACArgsPack(identifier,@2,ret)];
+        [self callbackWithFunctionKeyPathByMainThread:@"uexDownloaderMgr.cbCreateDownloader" arguments:ACArgsPack(identifier,@2,ret)];
 
     };
     if (!identifier || identifier.length == 0 || [self.downloaders.allKeys containsObject:identifier]) {
@@ -147,7 +147,7 @@
     __block NSDictionary *info = nil;
     
     @onExit{
-        [self.webViewEngine callbackWithFunctionKeyPath:@"uexDownloaderMgr.cbGetInfo" arguments:ACArgsPack(identifier,@1,info.ac_JSONFragment)];
+        [self callbackWithFunctionKeyPathByMainThread:@"uexDownloaderMgr.cbGetInfo" arguments:ACArgsPack(identifier,@1,info.ac_JSONFragment)];
 
     };
      
@@ -195,6 +195,38 @@
     }
 }
 
+#pragma mark - Callback Common
+
+/**
+ 保证在主线程中完成JS回调操作
+
+ @param jsFunc 回调JS方法
+ @param args 参数
+ */
+- (void)jsCallbackExecuteByMainThread:(ACJSFunctionRef *)jsFunc withArguments:(NSArray *)args {
+    if([NSThread isMainThread]){
+        [jsFunc executeWithArguments:args];
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [jsFunc executeWithArguments:args];
+        });
+    }
+}
+
+/**
+ 保证在主线程中完成JS回调操作
+ 
+ @param jsString 回调需要执行的JS字符串
+ */
+- (void)callbackWithFunctionKeyPathByMainThread:(NSString *)JSKeyPath arguments:(nullable NSArray *)arguments {
+    if([NSThread isMainThread]){
+        [self.webViewEngine callbackWithFunctionKeyPath:JSKeyPath arguments:arguments];
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.webViewEngine callbackWithFunctionKeyPath:JSKeyPath arguments:arguments];
+        });
+    }
+}
 
 #pragma mark - Test
 
@@ -219,13 +251,30 @@
     }
     return downloader;
 }
+
+/**
+ 在主线程将downloader解除引用。
+ 因为downloader中包含一个JSFunc的对象引用，当自身被解除引用触发内存回收的时候，就会在当前线程触发dealloc，也可能会在当前线程中触发持有的JSFunc对象的dealloc。而我们的ACJSFunctionRef的dealloc中存在访问JS对象的操作，该操作不允许在非主线程中进行，故而必须做保护。（暂时也没找到更好的办法，隐约觉得可能是引擎的ACJSFunctionRef的dealloc可以改一下，但是又怕引发其他问题）。 note at 20190823 by yipeng
+
+ */
+- (void)setDownloaderSessionBecomeInvalidByMainThread:(__kindof uexDownloader *)downloader {
+    if([NSThread isMainThread]){
+        [self.downloaders removeObjectForKey:downloader.identifier];
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.downloaders removeObjectForKey:downloader.identifier];
+        });
+    }
+}
+
 #pragma mark - uexDownloaderDelegate
 
 - (void)uexDownloader:(__kindof uexDownloader *)downloader taskDidCompletedWithError:(NSError *)error{
     
 }
 - (void)uexDownloader:(__kindof uexDownloader *)downloader sessionDidInvalidatedWithError:(NSError *)error{
-    [self.downloaders removeObjectForKey:downloader.identifier];
+    // 解除uexDownloader对象的引用，触发内存回收
+    [self setDownloaderSessionBecomeInvalidByMainThread:downloader];
 }
 - (void)uexDownloaderDidFinishHandlingBackgroundSessionEvents:(__kindof uexDownloader *)downloader{
     
