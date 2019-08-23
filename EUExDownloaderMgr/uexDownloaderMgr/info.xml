@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <uexplugins>
     <plugin
-        uexName="uexDownloaderMgr" version="4.0.2" build="2">
-        <info>2: 关闭网页后,会正确停止当前网页的下载任务</info>
+        uexName="uexDownloaderMgr" version="4.3.3" build="2019082301">
+        <info>3: 初步适配iOS13，防止回调崩溃</info>
+        <build>2: 关闭网页后,会正确停止当前网页的下载任务</build>
         <build>1:修复一个会导致崩溃的问题</build>
         <build>0:下载功能插件</build>
     </plugin>
