@@ -203,9 +203,20 @@
     if(!_sessionManager){
         AFURLSessionManager *manager = [[AFURLSessionManager alloc]initWithSessionConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
         @weakify(self);
+        __weak typeof (self) weakSelf = self;
         [manager setSessionDidBecomeInvalidBlock:^(NSURLSession * _Nonnull session, NSError * _Nonnull error) {
-            @strongify(self);
-            [self.delegate uexDownloader:self sessionDidInvalidatedWithError:error];
+            // @strongify(self);
+            // 在主线程将downloader解除引用。
+            // 因为downloader中包含一个JSFunc的对象引用，当自身被解除引用触发内存回收的时候，就会在当前线程触发dealloc，也可能会在当前线程中触发持有的JSFunc对象的dealloc。而我们的ACJSFunctionRef的dealloc中存在访问JS对象的操作，该操作不允许在非主线程中进行，故而必须做保护。（暂时也没找到更好的办法，隐约觉得可能是引擎的ACJSFunctionRef的dealloc可以改一下，但是又怕引发其他问题）。
+            // 而，之所以注释掉@strongify(self)，是因为声明了strong之后，此变量会一直持有直到block执行结束，而我们必须要在主线程中将downloader对象（即self）的引用清零，所以这里不要用strong
+            // note at 20190823 by yipeng
+            if([NSThread isMainThread]){
+                [weakSelf.delegate uexDownloader:weakSelf sessionDidInvalidatedWithError:error];
+            } else {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf.delegate uexDownloader:weakSelf sessionDidInvalidatedWithError:error];
+                });
+            }
         }];
         [manager setResponseSerializer:[AFHTTPResponseSerializer serializer]];
         [manager setTaskDidCompleteBlock:^(NSURLSession * _Nonnull session, NSURLSessionTask * _Nonnull task, NSError * _Nullable error) {
@@ -270,12 +281,8 @@ static const NSTimeInterval kMinimumSaveInteval = 5;
     if (self.status == uexDownloaderStatusDownloading && [currentTime timeIntervalSinceDate:self.lastOperationTime] > kMinimumSaveInteval) {
         [self save];
     }
-    id<AppCanWebViewEngineObject> cbTarget = self.observer;
-    if (!cbTarget) {
-        cbTarget = self.euexObj.webViewEngine;
-    }
-    [cbTarget callbackWithFunctionKeyPath:@"uexDownloaderMgr.onStatus" arguments:ACArgsPack(self.identifier,@(self.fileSize),@(self.percent),@(self.status))];
-    [self.cbFunc executeWithArguments:ACArgsPack(@(self.fileSize),@(self.percent),@(self.status))];
+    [self.euexObj callbackWithFunctionKeyPathByMainThread:@"uexDownloaderMgr.onStatus" arguments:ACArgsPack(self.identifier,@(self.fileSize),@(self.percent),@(self.status))];
+    [self.euexObj jsCallbackExecuteByMainThread:self.cbFunc withArguments:ACArgsPack(@(self.fileSize),@(self.percent),@(self.status))];
 }
 
 #pragma mark - Cache & Save
@@ -367,6 +374,9 @@ static const NSTimeInterval kMinimumSaveInteval = 5;
     return self;
 }
 
+- (void)dealloc{
+    ACLogVerbose(@"uexDownloader %@ dealloc", self);
+}
 
 @end
 

@@ -76,7 +76,7 @@
 
     @onExit{
         NSNumber *ret = isSuccess ? @0 : @1;
-        [self.webViewEngine callbackWithFunctionKeyPath:@"uexDownloaderMgr.cbCreateDownloader" arguments:ACArgsPack(identifier,@2,ret)];
+        [self callbackWithFunctionKeyPathByMainThread:@"uexDownloaderMgr.cbCreateDownloader" arguments:ACArgsPack(identifier,@2,ret)];
 
     };
     if (!identifier || identifier.length == 0 || [self.downloaders.allKeys containsObject:identifier]) {
@@ -147,7 +147,7 @@
     __block NSDictionary *info = nil;
     
     @onExit{
-        [self.webViewEngine callbackWithFunctionKeyPath:@"uexDownloaderMgr.cbGetInfo" arguments:ACArgsPack(identifier,@1,info.ac_JSONFragment)];
+        [self callbackWithFunctionKeyPathByMainThread:@"uexDownloaderMgr.cbGetInfo" arguments:ACArgsPack(identifier,@1,info.ac_JSONFragment)];
 
     };
      
@@ -195,6 +195,38 @@
     }
 }
 
+#pragma mark - Callback Common
+
+/**
+ 保证在主线程中完成JS回调操作
+
+ @param jsFunc 回调JS方法
+ @param args 参数
+ */
+- (void)jsCallbackExecuteByMainThread:(ACJSFunctionRef *)jsFunc withArguments:(NSArray *)args {
+    if([NSThread isMainThread]){
+        [jsFunc executeWithArguments:args];
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [jsFunc executeWithArguments:args];
+        });
+    }
+}
+
+/**
+ 保证在主线程中完成JS回调操作
+ 
+ @param jsString 回调需要执行的JS字符串
+ */
+- (void)callbackWithFunctionKeyPathByMainThread:(NSString *)JSKeyPath arguments:(nullable NSArray *)arguments {
+    if([NSThread isMainThread]){
+        [self.webViewEngine callbackWithFunctionKeyPath:JSKeyPath arguments:arguments];
+    } else {
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self.webViewEngine callbackWithFunctionKeyPath:JSKeyPath arguments:arguments];
+        });
+    }
+}
 
 #pragma mark - Test
 
@@ -219,6 +251,7 @@
     }
     return downloader;
 }
+
 #pragma mark - uexDownloaderDelegate
 
 - (void)uexDownloader:(__kindof uexDownloader *)downloader taskDidCompletedWithError:(NSError *)error{

@@ -34,7 +34,7 @@
 
 @interface EUExDownloaderMgr : EUExBase<uexDownloaderDelegate>
 
-
-
+- (void)callbackWithFunctionKeyPathByMainThread:(NSString *)JSKeyPath arguments:(nullable NSArray *)arguments;
+- (void)jsCallbackExecuteByMainThread:(ACJSFunctionRef *)jsFunc withArguments:(NSArray *)args;
 
 @end
