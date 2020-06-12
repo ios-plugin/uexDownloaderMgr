@@ -8,26 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		4236564A1CD361C90070CD3E /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 423656491CD361C90070CD3E /* AFNetworking.framework */; };
-		4236564B1CD361D10070CD3E /* AFNetworking.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 423656491CD361C90070CD3E /* AFNetworking.framework */; };
 		4275DCDD1CC4BD0100C67777 /* uexDownloadHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4275DCDC1CC4BD0100C67777 /* uexDownloadHelper.m */; };
 		4287EC0E1CC0793400EBD876 /* EUExDownloaderMgr.m in Sources */ = {isa = PBXBuildFile; fileRef = 4287EC0D1CC0793400EBD876 /* EUExDownloaderMgr.m */; };
 		4287EC141CC098EB00EBD876 /* uexDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 4287EC131CC098EB00EBD876 /* uexDownloader.m */; };
 		42A854621DC830A6007ADD9F /* AppCanKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42A854611DC830A6007ADD9F /* AppCanKit.framework */; };
 		5A9FF2511890B0A400E16C52 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A9FF2501890B0A400E16C52 /* Foundation.framework */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		5A9FF24B1890B0A400E16C52 /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 16;
-			files = (
-				4236564B1CD361D10070CD3E /* AFNetworking.framework in CopyFiles */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		423656491CD361C90070CD3E /* AFNetworking.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AFNetworking.framework; sourceTree = "<group>"; };
@@ -157,7 +143,6 @@
 			buildPhases = (
 				5A9FF2491890B0A400E16C52 /* Sources */,
 				5A9FF24A1890B0A400E16C52 /* Frameworks */,
-				5A9FF24B1890B0A400E16C52 /* CopyFiles */,
 			);
 			buildRules = (
 			);
