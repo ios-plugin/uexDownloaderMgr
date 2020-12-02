@@ -232,7 +232,7 @@
             [self save];
             [self.delegate uexDownloader:self taskDidCompletedWithError:error];
             [self onStatusCallback];
-            [self.sessionManager invalidateSessionCancelingTasks:YES];
+            [self.sessionManager invalidateSessionCancelingTasks:YES resetSession:NO];
             Unlock();
         }];
         _sessionManager = manager;
@@ -261,9 +261,6 @@
     if(theApp.useCertificateControl && [self.serverPath hasPrefix:@"https://"]){
         //setupSSLPolicy
         [self.sessionManager setSessionDidReceiveAuthenticationChallengeBlock:^NSURLSessionAuthChallengeDisposition(NSURLSession * _Nonnull session, NSURLAuthenticationChallenge * _Nonnull challenge, NSURLCredential *__autoreleasing  _Nullable * _Nullable credential) {
-            return [uexDownloadHelper authChallengeDispositionWithChallenge:challenge credential:credential];
-        }];
-        [self.sessionManager setTaskDidReceiveAuthenticationChallengeBlock:^NSURLSessionAuthChallengeDisposition(NSURLSession * _Nonnull session, NSURLSessionTask * _Nonnull task, NSURLAuthenticationChallenge * _Nonnull challenge, NSURLCredential *__autoreleasing  _Nullable * _Nullable credential) {
             return [uexDownloadHelper authChallengeDispositionWithChallenge:challenge credential:credential];
         }];
     }else{
