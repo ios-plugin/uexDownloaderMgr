@@ -129,7 +129,10 @@
         }
     };
     NSURL * (^handleDestinationBlock)(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response) = ^NSURL *(NSURL * _Nonnull targetPath, NSURLResponse * _Nonnull response){
-        return [NSURL uexDownloader_saveURLFromPath:self.savePath];
+        NSURL *savePathURL = [NSURL uexDownloader_saveURLFromPath:self.savePath];
+        // 如果文件已经存在，先删除
+        [[NSFileManager defaultManager] removeItemAtURL:savePathURL error:nil];
+        return savePathURL;
     };
     void (^handleCompletionBlock)(NSURLResponse * _Nonnull response, NSURL * _Nullable filePath, NSError * _Nullable error) = nil;
     if (self.resumable && self.resumeCache) {
