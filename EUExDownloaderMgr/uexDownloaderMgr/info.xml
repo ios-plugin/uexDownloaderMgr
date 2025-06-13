@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <uexplugins>
     <plugin
-        uexName="uexDownloaderMgr" version="4.5.4.1" build="2020061901">
-        <info>4: 适配4.5引擎中的4.0版AF，移除插件自带AFNetworking.framework</info>
+        uexName="uexDownloaderMgr" version="4.5.5" build="2025061301">
+        <info>5: 下载文件前移除缓存，防止同名文件无法覆盖的问题</info>
+        <build>4: 适配4.5引擎中的4.0版AF，移除插件自带AFNetworking.framework</build>
         <build>3.2: 初步适配iOS13，并修复了dealloc内存回收时触发JSContext操作的时机不在主线程而导致崩溃的问题</build>
         <build>2: 关闭网页后,会正确停止当前网页的下载任务</build>
         <build>1:修复一个会导致崩溃的问题</build>
